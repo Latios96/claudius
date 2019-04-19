@@ -1,6 +1,9 @@
 
 # Created by https://www.gitignore.io/api/c++,cmake
 # Edit at https://www.gitignore.io/?templates=c++,cmake
+.idea/*
+cmake-build-debug/*
+build/*
 
 ### C++ ###
 # Prerequisites
@@ -54,5 +57,3 @@ _deps
 *-prefix/
 
 # End of https://www.gitignore.io/api/c++,cmake
-.idea*
-cmake-build-debug/*
