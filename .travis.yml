@@ -1,0 +1,4 @@
+os: windows
+language: c++
+script:
+  - build.bat
