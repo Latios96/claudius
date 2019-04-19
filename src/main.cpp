@@ -1,7 +1,10 @@
-#include <iostream>
+#include <maya/MSimple.h>
+#include <maya/MIOStream.h>
 
-int main()
+DeclareSimpleCommand( helloWorld, "Jan Honsbrok", "2018");
+
+MStatus helloWorld::doIt( const MArgList& )
 {
-    std::cout << "Hello world" << std::endl;
-    return 0;
+  cout << "Hello World\n" << endl;
+  return MS::kSuccess;
 }
