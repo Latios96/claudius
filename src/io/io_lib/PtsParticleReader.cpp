@@ -6,7 +6,7 @@
 #include <iostream>
 #include "PtsParticleReader.h"
 
-void PtsParticleReader::readParticles(std::ifstream &file, ParticleContainer &particleContainer) {
+void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &particleContainer) {
   std::vector<char> str;
   std::vector<float> floats;
   file.seekg(0, std::ios::end);
@@ -28,7 +28,7 @@ void PtsParticleReader::readParticles(std::ifstream &file, ParticleContainer &pa
         floats.clear();
       }
       bufferString.clear();
-      while(i < str.size() && str[i] !='\n'){
+      while(i < str.size() && str[i] =='\n'){
         i++;
       }
       i++;
