@@ -7,7 +7,7 @@ set(CLAUDIUS_IO_CLI_SOURCES
 add_executable(claudius_cli ${CLAUDIUS_IO_CLI_SOURCES} )
 
 target_link_libraries(claudius_cli
-        claudios_io_lib
+        claudius_io_lib claudius_utils_lib
         )
 
 install(TARGETS claudius_cli DESTINATION bin)

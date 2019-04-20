@@ -6,10 +6,7 @@
 #include <string>
 #include <vector>
 #include <chrono>
-
-#ifndef GIT_COMMIT_HASH
-#define GIT_COMMIT_HASH "0000000" // 0000000 means uninitialized
-#endif
+#include <version.h>
 
 void split(const std::string& s, char c,
            std::vector<std::string>& v) {
@@ -32,7 +29,7 @@ struct Vector3f{
 };
 
 int main(){
-  std::cout << GIT_COMMIT_HASH << std::endl;
+  std::cout << getClaudiusVersion() << std::endl;
   auto begin = std::chrono::steady_clock::now();
   std::ifstream file(R"(M:\Projekte\2019\recap_test\test.pts)");
   std::vector<char> str;

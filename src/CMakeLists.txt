@@ -8,6 +8,7 @@ execute_process(
 
 add_definitions( -DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}" )
 
+add_subdirectory(utils)
 add_subdirectory(io)
 
 # add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
