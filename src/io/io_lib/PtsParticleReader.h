@@ -7,7 +7,7 @@
 
 #include "ParticleReader.h"
 class PtsParticleReader : public ParticleReader{
-  void readParticles(const std::string &path, ParticleContainer &particleContainer) override;
+  void readParticles(std::ifstream &file, ParticleContainer &particleContainer) override;
   std::string getReaderName() override;
 };
 

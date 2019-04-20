@@ -6,8 +6,7 @@
 #include <iostream>
 #include "PtsParticleReader.h"
 
-void PtsParticleReader::readParticles(const std::string &path, ParticleContainer &particleContainer) {
-  std::ifstream file(path);
+void PtsParticleReader::readParticles(std::ifstream &file, ParticleContainer &particleContainer) {
   std::vector<char> str;
   std::vector<float> floats;
   file.seekg(0, std::ios::end);
