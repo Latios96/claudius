@@ -8,6 +8,6 @@
 #endif
 
 std::string getClaudiusVersion() {
-  return "Claudius, commit " + std::string(GIT_COMMIT_HASH);
+  return "Commit hash " + std::string(GIT_COMMIT_HASH);
 }
 
