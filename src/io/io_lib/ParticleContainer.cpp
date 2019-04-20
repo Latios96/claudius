@@ -11,3 +11,6 @@ void ParticleContainer::addParticle(float x, float y, float z) {
   particles.emplace_back(y);
   particles.emplace_back(z);
 }
+bool ParticleContainer::isEmpty() {
+  return particleCount() == 0;
+}
