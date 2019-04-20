@@ -9,6 +9,7 @@
 #include <version.h>
 #include <ParticleContainer.h>
 #include <algorithm>
+#include <ParticleReaderFactory.h>
 
 void split(const std::string& s, char c,
            std::vector<std::string>& v) {
@@ -30,7 +31,7 @@ struct Vector3f{
   Vector3f(float x, float y, float z) : x(x), y(y), z(z) {}
 };
 
-int main(){
+int aamain(){
   std::cout << getClaudiusVersion() << std::endl;
   auto begin = std::chrono::steady_clock::now();
   std::ifstream file(R"(M:\Projekte\2019\recap_test\test.pts)");
@@ -57,6 +58,25 @@ int main(){
   std::cout << microseconds *0.0000006 << std::endl;
   std::cout << floats.size() / 3 << std::endl;
   return 0;
+}
+
+int main(){
+  std::cout << getClaudiusVersion() << std::endl;
+  //const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
+  const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
+
+  auto begin = std::chrono::steady_clock::now();
+
+  auto particleReader = ParticleReaderFactory::createParticleReader(filepath);
+  ParticleContainer particleContainer;
+  particleReader->readParticles(filepath, particleContainer);
+
+  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+  auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
+  std::cout << microseconds *0.0000006 << std::endl;
+  std::cout << particleContainer.particleCount() << std::endl;
+  return 0;
+  
 }
 
 

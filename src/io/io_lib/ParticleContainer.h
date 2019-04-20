@@ -9,9 +9,9 @@
 
 class ParticleContainer {
  public:
-  unsigned int particleCount();
+  const unsigned int particleCount();
   void addParticle(float x, float y, float z);
-  bool isEmpty();
+  const bool isEmpty();
  private:
   std::vector<float> particles;
 };

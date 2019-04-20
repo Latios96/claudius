@@ -9,7 +9,7 @@
 #include "ParticleContainer.h"
 class ParticleReader{
  public:
-  virtual void readParticles(const std::string &path, const ParticleContainer &particleContainer) = 0;
+  virtual void readParticles(const std::string &path, ParticleContainer &particleContainer) = 0;
   virtual std::string getReaderName() = 0;
   virtual ~ParticleReader() = default;
 };
