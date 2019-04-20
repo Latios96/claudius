@@ -7,6 +7,10 @@
 #include <vector>
 #include <chrono>
 
+#ifndef GIT_COMMIT_HASH
+#define GIT_COMMIT_HASH "0000000" // 0000000 means uninitialized
+#endif
+
 void split(const std::string& s, char c,
            std::vector<std::string>& v) {
   std::string::size_type i = 0;
@@ -28,8 +32,9 @@ struct Vector3f{
 };
 
 int main(){
+  std::cout << GIT_COMMIT_HASH << std::endl;
   auto begin = std::chrono::steady_clock::now();
-  std::ifstream file(R"(M:\Projekte\2019\recap_test\Aero_Scan.pts)");
+  std::ifstream file(R"(M:\Projekte\2019\recap_test\test.pts)");
   std::vector<char> str;
   std::vector<float> floats;
   /*std::getline(file, str);
