@@ -1,4 +1,4 @@
-add_subdirectory(lib)
+add_subdirectory(io_lib)
 
 set(CLAUDIUS_IO_CLI_SOURCES
         main.cpp

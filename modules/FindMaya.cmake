@@ -11,8 +11,8 @@
 # Variables that will be defined:
 # MAYA_FOUND          Defined if a Maya installation has been detected
 # MAYA_EXECUTABLE     Path to Maya's executable
-# MAYA_<lib>_FOUND    Defined if <lib> has been found
-# MAYA_<lib>_LIBRARY  Path to <lib> library
+# MAYA_<io_lib>_FOUND    Defined if <io_lib> has been found
+# MAYA_<io_lib>_LIBRARY  Path to <io_lib> library
 # MAYA_INCLUDE_DIR    Path to the devkit's include directories
 # MAYA_LIBRARIES      All the Maya libraries
 #
