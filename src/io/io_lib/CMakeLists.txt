@@ -7,6 +7,8 @@ set(CLAUDIUS_IO_LIB_SOURCES
         ParticleReader.h
         ParticleReaderFactory.h
         ParticleReaderFactory.cpp
+        PtsParticleReader.h
+        PtsParticleReader.cpp
         )
 add_library(claudius_io_lib STATIC
         ${CLAUDIUS_IO_LIB_SOURCES}

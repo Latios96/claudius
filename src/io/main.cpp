@@ -30,7 +30,7 @@ struct Vector3f{
   Vector3f(float x, float y, float z) : x(x), y(y), z(z) {}
 };
 
-int madin(){
+int main(){
   std::cout << getClaudiusVersion() << std::endl;
   auto begin = std::chrono::steady_clock::now();
   std::ifstream file(R"(M:\Projekte\2019\recap_test\test.pts)");
@@ -59,9 +59,4 @@ int madin(){
   return 0;
 }
 
-int main(){
-  std::string path(R"(M:\Projekte\2019\recap_test\test.pts)");
-  const std::string &fileExtension = path.substr(path.find_last_of('.') + 1);
-  std::cout << fileExtension << std::endl;
-  return 0;
-}
+
