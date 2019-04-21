@@ -7,5 +7,6 @@
 
 #include <string>
 std::string getClaudiusVersion();
+std::string aboutClaudius();
 
 #endif //RASPITOLIGHT_SRC_UTILS_VERSION_H_
