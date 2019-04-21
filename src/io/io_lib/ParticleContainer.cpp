@@ -14,3 +14,6 @@ void ParticleContainer::addParticle(float x, float y, float z) {
 const bool ParticleContainer::isEmpty() {
   return particleCount() == 0;
 }
+const float *ParticleContainer::getParticleData() {
+  return particles.data();
+}

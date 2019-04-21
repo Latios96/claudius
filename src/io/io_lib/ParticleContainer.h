@@ -12,6 +12,7 @@ class ParticleContainer {
   const unsigned int particleCount();
   void addParticle(float x, float y, float z);
   const bool isEmpty();
+  const float* getParticleData();
  private:
   std::vector<float> particles;
 };
