@@ -3,8 +3,9 @@
 //
 
 #include <fstream>
+#include <ParticleReaderFactory.h>
 #include "ClaudiusVisualizerDrawOverride.h"
-#include "../io/io_lib/ParticleReaderFactory.h"
+
 ClaudiusVisualizerDrawOverride::ClaudiusVisualizerDrawOverride(const MObject &obj) : MPxDrawOverride(obj, nullptr) {
 
 }
@@ -43,18 +44,22 @@ void ClaudiusVisualizerDrawOverride::addUIDrawables(const MDagPath &objPath,
   drawManager.setFontSize( MHWRender::MUIDrawManager::kSmallFontSize );
   drawManager.text( pos,  MString("ClaudiusVisualizer"), MHWRender::MUIDrawManager::kCenter );
 
-  /*const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
+  const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
   //const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
   std::ifstream filestream(filepath);
 
   auto particleReader = ParticleReaderFactory::createParticleReader(filepath);
   ParticleContainer particleContainer;
-  particleReader->readParticles(filestream, particleContainer);*/
+  particleReader->readParticles(filestream, particleContainer);
 
-  drawManager.point(MPoint(0,0,0));
-  drawManager.point(MPoint(0,1,0));
-  drawManager.point(MPoint(0,2,0));
+  const float *particleData = particleContainer.getParticleData();
 
+  cout << particleContainer.particleCount() << std::endl;
+
+  for(unsigned int i=0; i<particleContainer.particleCount(); i++){
+    drawManager.point(MPoint(particleData[i], particleData[i+1], particleData[i+2]));
+  }
+  
   drawManager.endDrawable();
 
 }

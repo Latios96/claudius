@@ -12,7 +12,7 @@ find_package(Maya REQUIRED)
 
 include_directories(${MAYA_INCLUDE_DIR})
 link_directories(${MAYA_LIBRARY_DIR})
-target_link_libraries(${PROJECT_NAME} ${MAYA_LIBRARIES} opengl32 claudius_utils_lib)
+target_link_libraries(${PROJECT_NAME} ${MAYA_LIBRARIES} opengl32 claudius_utils_lib claudius_io_lib)
 
 MAYA_PLUGIN(${PROJECT_NAME})
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
