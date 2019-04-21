@@ -1,4 +1,8 @@
-set(SOURCE_FILES plugin.cpp)
+set(SOURCE_FILES
+        plugin.cpp
+        ClaudiusVisualizer.h
+        ClaudiusVisualizer.cpp
+        )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
