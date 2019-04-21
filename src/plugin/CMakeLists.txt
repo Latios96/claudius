@@ -6,7 +6,7 @@ find_package(Maya REQUIRED)
 
 include_directories(${MAYA_INCLUDE_DIR})
 link_directories(${MAYA_LIBRARY_DIR})
-target_link_libraries(${PROJECT_NAME} ${MAYA_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${MAYA_LIBRARIES} opengl32)
 
 MAYA_PLUGIN(${PROJECT_NAME})
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)

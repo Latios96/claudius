@@ -62,8 +62,8 @@ int aamain(){
 
 int main(){
   std::cout << getClaudiusVersion() << std::endl;
-  //const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
-  const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
+  const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
+  //const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
   std::ifstream filestream(filepath);
 
   auto begin = std::chrono::steady_clock::now();
