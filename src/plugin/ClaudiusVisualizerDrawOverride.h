@@ -30,6 +30,8 @@ class ClaudiusVisualizerDrawOverride : public MPxDrawOverride
  public:
   static MTypeId id;
 
+  static void drawCallback(const MDrawContext& context, const MUserData* data);
+
  protected:
   virtual MUserData* prepareForDraw(
       const MDagPath& objPath,
@@ -46,8 +48,6 @@ class ClaudiusVisualizerDrawOverride : public MPxDrawOverride
 
   MHWRender::DrawAPI supportedDrawAPIs() const override;
 
-  bool dataIsResuable(PartioVisualizerData *pData);
-  PartioVisualizerData *loadNewData();
   ClaudiusVisualizer* claudiusVisualizer;
 };
 

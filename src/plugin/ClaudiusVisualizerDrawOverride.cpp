@@ -6,13 +6,18 @@
 #include <ParticleReaderFactory.h>
 #include "ClaudiusVisualizerDrawOverride.h"
 #include <maya/MFnDependencyNode.h>
+#include <maya/MHardwareRenderer.h>
+#include <maya/MGLFunctionTable.h>
 
-ClaudiusVisualizerDrawOverride::ClaudiusVisualizerDrawOverride(const MObject &obj) : MPxDrawOverride(obj, nullptr) {
+
+ClaudiusVisualizerDrawOverride::ClaudiusVisualizerDrawOverride(const MObject &obj) : MPxDrawOverride(obj, &drawCallback) {
   claudiusVisualizer = nullptr;
   MStatus status;
   MFnDependencyNode dnode(obj, &status);
-  if (status)
-    claudiusVisualizer = dynamic_cast<ClaudiusVisualizer*>(dnode.userNode());
+  if (status){
+      claudiusVisualizer = dynamic_cast<ClaudiusVisualizer*>(dnode.userNode());
+  }
+
 }
 ClaudiusVisualizerDrawOverride::~ClaudiusVisualizerDrawOverride() {
 
@@ -22,11 +27,13 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
                                                       const MDagPath &cameraPath,
                                                       const MFrameContext &frameContext,
                                                       MUserData *oldData) {
+    cout << "prepare for draw" << std::endl;
   auto *visualizerData = dynamic_cast<PartioVisualizerData*>(oldData);
 
   if(visualizerData == nullptr){
     auto *pData = new PartioVisualizerData();
     if(claudiusVisualizer != nullptr && claudiusVisualizer->particleContainer != nullptr){
+        cout << "setting particle container with " << claudiusVisualizer->particleContainer->particleCount() << " particles" << std::endl;
       pData->particleContainer = claudiusVisualizer->particleContainer;
     }
     else{
@@ -35,9 +42,12 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
     return pData;
   }
   else{
-    return visualizerData;
+      if(claudiusVisualizer != nullptr && claudiusVisualizer->particleContainer != nullptr){
+          cout << "setting particle container with " << claudiusVisualizer->particleContainer->particleCount() << " particles" << std::endl;
+          visualizerData->particleContainer = claudiusVisualizer->particleContainer;
+      }
+      return visualizerData;
   }
-  return new PartioVisualizerData();
 }
 MHWRender::DrawAPI ClaudiusVisualizerDrawOverride::supportedDrawAPIs() const {
 #if MAYA_API_VERSION >= 201600
@@ -53,7 +63,7 @@ void ClaudiusVisualizerDrawOverride::addUIDrawables(const MDagPath &objPath,
                                                     MHWRender::MUIDrawManager &drawManager,
                                                     const MHWRender::MFrameContext &frameContext,
                                                     const MUserData *data) {
-  drawManager.beginDrawable();
+  /*drawManager.beginDrawable();
 
   // Draw a text "Foot"
   MPoint pos( 0.0, 0.0, 0.0 ); // Position of the text
@@ -77,27 +87,34 @@ void ClaudiusVisualizerDrawOverride::addUIDrawables(const MDagPath &objPath,
     }
   }
   
-  drawManager.endDrawable();
+  drawManager.endDrawable();*/
 
 }
-bool ClaudiusVisualizerDrawOverride::dataIsResuable(PartioVisualizerData *pData) {
-  return pData != nullptr;
+void ClaudiusVisualizerDrawOverride::drawCallback(const MDrawContext& context, const MUserData* data) {
+    MHardwareRenderer *rend = MHardwareRenderer::theRenderer();
+    MGLFunctionTable *gGLFT;
+    if (rend){
+
+        gGLFT = rend->glFunctionTable();
+
+        auto *visualizerData = dynamic_cast<const PartioVisualizerData*>(data);
+
+        if(visualizerData != nullptr){
+            if(visualizerData->particleContainer != nullptr){
+                const float* particleData = visualizerData->particleContainer->getParticleData();
+
+                gGLFT->glPointSize(10.0f);
+                gGLFT->glColor3f( 0.0f, 0.0f, 1.0f );
+                gGLFT->glBegin(MGL_POINTS);
+                for(unsigned int i=0; i<visualizerData->particleContainer->particleCount() * 3; i = i+3){
+                    // cout << i << particleData[i] << " " << particleData[i+1] << " " << particleData[i+2] << std::endl;
+                    //drawManager.point(MPoint(particleData[i], particleData[i+1], particleData[i+2]));
+                    gGLFT->glVertex3f( particleData[i], particleData[i+1], particleData[i+2] );
+                }
+                gGLFT->glEnd();
+            }
+        }
+    }
 }
-PartioVisualizerData *ClaudiusVisualizerDrawOverride::loadNewData() {
 
-  //const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
-  const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
-  cout << "Opening streamd" << std::endl;
-  std::ifstream filestream(filepath);
 
-  auto particleReader = ParticleReaderFactory::createParticleReader(filepath);
-  auto* particleContainer = new ParticleContainer();
-  cout << "reading data" << std::endl;
-  particleReader->readParticles(filestream, *particleContainer);
-  cout << "data reading finished" << std::endl;
-
-  cout << particleContainer->particleCount() << std::endl;
-  auto *partioVisualizerData = new PartioVisualizerData();
-  partioVisualizerData->particleContainer = particleContainer;
-  return partioVisualizerData;
-}

@@ -30,8 +30,9 @@ void ClaudiusVisualizer::postConstructor() {
 MStatus ClaudiusVisualizer::compute(const MPlug &plug, MDataBlock &data) {
   cout << "Compute" << std::endl;
   if(particleContainer == nullptr){
-    const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
-    //const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
+      //const std::string filepath = R"(M:\Projekte\2019\recap_test\Aero_Scan.pts)";
+      //const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
+    const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
 
     cout << "Opening streame" << std::endl;
     std::ifstream filestream(filepath);
@@ -45,7 +46,7 @@ MStatus ClaudiusVisualizer::compute(const MPlug &plug, MDataBlock &data) {
     cout << particleContainer->particleCount() << std::endl;
   }
   else{
-    cout << "already computed" << std::endl;
+    cout << "already computed with " << particleContainer->particleCount() << " particles" << std::endl;
   }
   return MStatus::kSuccess;
 }
