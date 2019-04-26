@@ -5,8 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include "PtsParticleReader.h"
-
-
+#include "CharBufferOperator.h"
 
 void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &particleContainer) {
   std::vector<char> str;
@@ -18,36 +17,13 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
 
   std::string bufferString;
   unsigned int i=0;
-
-  /*while(str[i] != '\n' && i < str.size()){
-    i++;
-  }
-  i++;
-  while(i < str.size()){
-    if(str[i] == '\n' || str[i] == ' '){
-		if (bufferString != "") {
-			floats.push_back(std::stof(bufferString));
-			if (floats.size() == 3) {
-				particleContainer.addParticle(floats[0], floats[1], floats[2]);
-				floats.clear();
-			}
-			bufferString.clear();
-		}
-      while(i < str.size() && str[i] =='\n'){
-        i++;
-      }
-    }
-    else{
-      bufferString.push_back(str[i]);
-    }
-    i++;
-  }*/
-  BufferOperator bufferOperator(str);
+  
+  CharBufferOperator bufferOperator(str);
   bufferOperator.toFirstCharAfterNewLine();
   float x,y,z;
   while(bufferOperator.canContinue()){
     if(bufferOperator.readUntilSpace(bufferString)){
-		if (bufferString != "") {
+		if (!bufferString.empty()) {
 			x = std::stof(bufferString);
 			bufferString.clear();
 		}
@@ -60,7 +36,6 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
       break;
     }
 
-
     bufferOperator.toFirstCharAfterSpace();
     if(bufferOperator.readUntilSpace(bufferString)){
       y = std::stof(bufferString);
@@ -69,7 +44,6 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
     else{
       break;
     }
-
 
 	bufferOperator.toFirstCharAfterSpace();
     if(bufferOperator.readUntilNewLine(bufferString)){
