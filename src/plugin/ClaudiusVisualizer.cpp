@@ -31,7 +31,9 @@ MStatus ClaudiusVisualizer::compute(const MPlug &plug, MDataBlock &data) {
   cout << "Compute" << std::endl;
   if(particleContainer == nullptr){
     const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
-    cout << "Opening stream" << std::endl;
+    //const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
+
+    cout << "Opening streame" << std::endl;
     std::ifstream filestream(filepath);
 
     auto particleReader = ParticleReaderFactory::createParticleReader(filepath);

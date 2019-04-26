@@ -26,7 +26,7 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
 
   if(visualizerData == nullptr){
     auto *pData = new PartioVisualizerData();
-    if(claudiusVisualizer->particleContainer != nullptr){
+    if(claudiusVisualizer != nullptr && claudiusVisualizer->particleContainer != nullptr){
       pData->particleContainer = claudiusVisualizer->particleContainer;
     }
     else{
@@ -37,7 +37,7 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
   else{
     return visualizerData;
   }
-
+  return new PartioVisualizerData();
 }
 MHWRender::DrawAPI ClaudiusVisualizerDrawOverride::supportedDrawAPIs() const {
 #if MAYA_API_VERSION >= 201600
@@ -65,10 +65,16 @@ void ClaudiusVisualizerDrawOverride::addUIDrawables(const MDagPath &objPath,
 
   auto *visualizerData = dynamic_cast<const PartioVisualizerData*>(data);
 
-  const float* particleData = visualizerData->particleContainer->getParticleData();
+  if(visualizerData != nullptr){
+    if(visualizerData->particleContainer != nullptr){
+      const float* particleData = visualizerData->particleContainer->getParticleData();
 
-  for(unsigned int i=0; i<visualizerData->particleContainer->particleCount(); i++){
-    drawManager.point(MPoint(particleData[i], particleData[i+1], particleData[i+2]));
+      for(unsigned int i=0; i<visualizerData->particleContainer->particleCount() * 3; i = i+3){
+        // cout << i << particleData[i] << " " << particleData[i+1] << " " << particleData[i+2] << std::endl;
+        drawManager.point(MPoint(particleData[i], particleData[i+1], particleData[i+2]));
+      }
+
+    }
   }
   
   drawManager.endDrawable();
@@ -81,7 +87,7 @@ PartioVisualizerData *ClaudiusVisualizerDrawOverride::loadNewData() {
 
   //const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
   const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
-  cout << "Opening stream" << std::endl;
+  cout << "Opening streamd" << std::endl;
   std::ifstream filestream(filepath);
 
   auto particleReader = ParticleReaderFactory::createParticleReader(filepath);

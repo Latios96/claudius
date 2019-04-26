@@ -62,8 +62,8 @@ int aamain(){
 
 int main(){
   std::cout << aboutClaudius() << std::endl;
-  //const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
-  const std::string filepath = R"(M:\Projekte\2019\recap_test\Aero_Scan.pts)";
+  const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
+  //const std::string filepath = R"(M:\Projekte\2019\recap_test\Aero_Scan.pts)";
   std::ifstream filestream(filepath);
 
   auto begin = std::chrono::steady_clock::now();
@@ -76,6 +76,7 @@ int main(){
   auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
   std::cout << microseconds *0.0000006 << std::endl;
   std::cout << particleContainer.particleCount() << std::endl;
+  
   return 0;
   
 }

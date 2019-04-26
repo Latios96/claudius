@@ -6,7 +6,7 @@
 #define RASPITOLIGHT_SRC_IO_IO_LIB_PARTICLECONTAINER_H_
 
 #include <vector>
-
+// todo do 3float iterator
 class ParticleContainer {
  public:
   const unsigned int particleCount();

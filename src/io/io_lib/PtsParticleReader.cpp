@@ -7,6 +7,7 @@
 #include "PtsParticleReader.h"
 
 
+
 void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &particleContainer) {
   std::vector<char> str;
   std::vector<float> floats;
@@ -18,7 +19,7 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
   std::string bufferString;
   unsigned int i=0;
 
-  while(str[i] != '\n' && i < str.size()){
+  /*while(str[i] != '\n' && i < str.size()){
     i++;
   }
   i++;
@@ -40,7 +41,49 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
       bufferString.push_back(str[i]);
     }
     i++;
+  }*/
+  BufferOperator bufferOperator(str);
+  bufferOperator.toFirstCharAfterNewLine();
+  float x,y,z;
+  while(bufferOperator.canContinue()){
+    if(bufferOperator.readUntilSpace(bufferString)){
+		if (bufferString != "") {
+			x = std::stof(bufferString);
+			bufferString.clear();
+		}
+		else {
+			break;
+		}
+      
+    }
+    else{
+      break;
+    }
+
+
+    bufferOperator.toFirstCharAfterSpace();
+    if(bufferOperator.readUntilSpace(bufferString)){
+      y = std::stof(bufferString);
+      bufferString.clear();
+    }
+    else{
+      break;
+    }
+
+
+	bufferOperator.toFirstCharAfterSpace();
+    if(bufferOperator.readUntilNewLine(bufferString)){
+      z = std::stof(bufferString);
+      bufferString.clear();
+    }
+    else{
+      break;
+    }
+
+    particleContainer.addParticle(x,y,z);
+    bufferOperator.toFirstCharAfterNewLine();
   }
+
 }
 std::string PtsParticleReader::getReaderName() {
   return "pts";
