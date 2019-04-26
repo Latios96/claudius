@@ -6,6 +6,7 @@
 #define CLAUDIUS_SRC_PLUGIN_CLAUDIUSVISUALIZER_H_
 
 #include <maya/MPxLocatorNode.h>
+#include <ParticleContainer.h>
 
 class ClaudiusVisualizer:  public MPxLocatorNode{
  public:
@@ -26,6 +27,7 @@ class ClaudiusVisualizer:  public MPxLocatorNode{
  public:
   static MTypeId id;
   static MString drawDbClassification;
+  ParticleContainer *particleContainer;
 };
 
 #endif //CLAUDIUS_SRC_PLUGIN_CLAUDIUSVISUALIZER_H_

@@ -5,12 +5,18 @@
 #ifndef CLAUDIUS_SRC_PLUGIN_CLAUDIUSVISUALIZERDRAWOVERRIDE_H_
 #define CLAUDIUS_SRC_PLUGIN_CLAUDIUSVISUALIZERDRAWOVERRIDE_H_
 #include <maya/MPxDrawOverride.h>
+#include "ParticleContainer.h"
+#include "ClaudiusVisualizer.h"
 
 class PartioVisualizerData : public MUserData
 {
  public:
-  PartioVisualizerData() : MUserData(false) {} // don't delete after draw
-  ~PartioVisualizerData() override {}
+  PartioVisualizerData() : MUserData(false) {
+	  // don't delete after draw
+	  particleContainer = nullptr;
+  } 
+  ParticleContainer *particleContainer;
+  ~PartioVisualizerData() override {delete particleContainer;}
 };
 
 class ClaudiusVisualizerDrawOverride : public MPxDrawOverride
@@ -40,6 +46,9 @@ class ClaudiusVisualizerDrawOverride : public MPxDrawOverride
 
   MHWRender::DrawAPI supportedDrawAPIs() const override;
 
+  bool dataIsResuable(PartioVisualizerData *pData);
+  PartioVisualizerData *loadNewData();
+  ClaudiusVisualizer* claudiusVisualizer;
 };
 
 #endif //CLAUDIUS_SRC_PLUGIN_CLAUDIUSVISUALIZERDRAWOVERRIDE_H_

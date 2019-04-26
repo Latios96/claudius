@@ -5,9 +5,14 @@
 #include <fstream>
 #include <ParticleReaderFactory.h>
 #include "ClaudiusVisualizerDrawOverride.h"
+#include <maya/MFnDependencyNode.h>
 
 ClaudiusVisualizerDrawOverride::ClaudiusVisualizerDrawOverride(const MObject &obj) : MPxDrawOverride(obj, nullptr) {
-
+  claudiusVisualizer = nullptr;
+  MStatus status;
+  MFnDependencyNode dnode(obj, &status);
+  if (status)
+    claudiusVisualizer = dynamic_cast<ClaudiusVisualizer*>(dnode.userNode());
 }
 ClaudiusVisualizerDrawOverride::~ClaudiusVisualizerDrawOverride() {
 
@@ -17,8 +22,22 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
                                                       const MDagPath &cameraPath,
                                                       const MFrameContext &frameContext,
                                                       MUserData *oldData) {
-  cout << "prepareForDraw" << std::endl;
-  return new PartioVisualizerData();
+  auto *visualizerData = dynamic_cast<PartioVisualizerData*>(oldData);
+
+  if(visualizerData == nullptr){
+    auto *pData = new PartioVisualizerData();
+    if(claudiusVisualizer->particleContainer != nullptr){
+      pData->particleContainer = claudiusVisualizer->particleContainer;
+    }
+    else{
+      pData->particleContainer = nullptr;
+    }
+    return pData;
+  }
+  else{
+    return visualizerData;
+  }
+
 }
 MHWRender::DrawAPI ClaudiusVisualizerDrawOverride::supportedDrawAPIs() const {
 #if MAYA_API_VERSION >= 201600
@@ -44,22 +63,35 @@ void ClaudiusVisualizerDrawOverride::addUIDrawables(const MDagPath &objPath,
   drawManager.setFontSize( MHWRender::MUIDrawManager::kSmallFontSize );
   drawManager.text( pos,  MString("ClaudiusVisualizer"), MHWRender::MUIDrawManager::kCenter );
 
-  const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
-  //const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
-  std::ifstream filestream(filepath);
+  auto *visualizerData = dynamic_cast<const PartioVisualizerData*>(data);
 
-  auto particleReader = ParticleReaderFactory::createParticleReader(filepath);
-  ParticleContainer particleContainer;
-  particleReader->readParticles(filestream, particleContainer);
+  const float* particleData = visualizerData->particleContainer->getParticleData();
 
-  const float *particleData = particleContainer.getParticleData();
-
-  cout << particleContainer.particleCount() << std::endl;
-
-  for(unsigned int i=0; i<particleContainer.particleCount(); i++){
+  for(unsigned int i=0; i<visualizerData->particleContainer->particleCount(); i++){
     drawManager.point(MPoint(particleData[i], particleData[i+1], particleData[i+2]));
   }
   
   drawManager.endDrawable();
 
+}
+bool ClaudiusVisualizerDrawOverride::dataIsResuable(PartioVisualizerData *pData) {
+  return pData != nullptr;
+}
+PartioVisualizerData *ClaudiusVisualizerDrawOverride::loadNewData() {
+
+  //const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
+  const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
+  cout << "Opening stream" << std::endl;
+  std::ifstream filestream(filepath);
+
+  auto particleReader = ParticleReaderFactory::createParticleReader(filepath);
+  auto* particleContainer = new ParticleContainer();
+  cout << "reading data" << std::endl;
+  particleReader->readParticles(filestream, *particleContainer);
+  cout << "data reading finished" << std::endl;
+
+  cout << particleContainer->particleCount() << std::endl;
+  auto *partioVisualizerData = new PartioVisualizerData();
+  partioVisualizerData->particleContainer = particleContainer;
+  return partioVisualizerData;
 }

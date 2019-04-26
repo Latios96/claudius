@@ -1,5 +1,5 @@
 project( claudius ) # accessable with ${PROJECT_NAME}
-cmake_minimum_required( VERSION 2.8 )
+cmake_minimum_required( VERSION 3.1 )
 
 # Activate C++ 11 features
 include( CheckCXXCompilerFlag )

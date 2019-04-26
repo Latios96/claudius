@@ -6,6 +6,7 @@
 #include <iostream>
 #include "PtsParticleReader.h"
 
+
 void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &particleContainer) {
   std::vector<char> str;
   std::vector<float> floats;
@@ -13,6 +14,7 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
   str.resize(file.tellg());
   file.seekg(0);
   file.read(str.data(), str.size());
+
   std::string bufferString;
   unsigned int i=0;
 
@@ -22,16 +24,17 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
   i++;
   while(i < str.size()){
     if(str[i] == '\n' || str[i] == ' '){
-      floats.push_back(std::stof(bufferString));
-      if (floats.size() == 3){
-        particleContainer.addParticle(floats[0], floats[1], floats[2]);
-        floats.clear();
-      }
-      bufferString.clear();
+		if (bufferString != "") {
+			floats.push_back(std::stof(bufferString));
+			if (floats.size() == 3) {
+				particleContainer.addParticle(floats[0], floats[1], floats[2]);
+				floats.clear();
+			}
+			bufferString.clear();
+		}
       while(i < str.size() && str[i] =='\n'){
         i++;
       }
-      i++;
     }
     else{
       bufferString.push_back(str[i]);
