@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - added changelog.md
+### Changed
+- ClaudiusVisualizer Nodes created by the FileTranslator are named by the imported file name
 ## [0.1.0] - 2017-04-27
 ### Changed
 - adjusted deploy script to Publish zip archives to OneDrive

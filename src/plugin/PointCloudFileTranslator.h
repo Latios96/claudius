@@ -28,6 +28,10 @@ class PointCloudFileTranslator : public MPxFileTranslator {
   ) const; // check if file can be translated by this translator
 
   static void *creator ();
+
+ private:
+  void nameVisualizerNodeCorrectly(MString file, MFnDagNode &visualizerDagNode);
+  MString generateNodeName(MString fileNameMString);
 };
 
 #endif //CLAUDIUS_SRC_PLUGIN_POINTCLOUDFILETRANSLATOR_H_
