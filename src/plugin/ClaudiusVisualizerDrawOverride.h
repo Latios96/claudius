@@ -16,7 +16,7 @@ class PartioVisualizerData : public MUserData
 	  particleContainer = nullptr;
   } 
   ParticleContainer *particleContainer;
-  ~PartioVisualizerData() override {delete particleContainer;}
+  ~PartioVisualizerData() override {};
 };
 
 class ClaudiusVisualizerDrawOverride : public MPxDrawOverride
