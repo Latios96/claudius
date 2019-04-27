@@ -4,6 +4,8 @@ set(SOURCE_FILES
         ClaudiusVisualizer.cpp
         ClaudiusVisualizerDrawOverride.h
         ClaudiusVisualizerDrawOverride.cpp
+        PointCloudFileTranslator.h
+        PointCloudFileTranslator.cpp
         )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})

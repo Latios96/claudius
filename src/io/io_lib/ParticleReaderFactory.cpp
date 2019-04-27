@@ -11,4 +11,5 @@ std::shared_ptr<ParticleReader> ParticleReaderFactory::createParticleReader(cons
       return std::shared_ptr<ParticleReader>(new PtsParticleReader());
     }
     std::cerr << "No reader supporting file extension " + fileExtension << std::endl;
+    return std::shared_ptr<ParticleReader>(nullptr);
 }

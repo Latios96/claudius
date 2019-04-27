@@ -13,9 +13,7 @@
 class ClaudiusVisualizer:  public MPxLocatorNode{
  public:
     ClaudiusVisualizer();
-    virtual ~ClaudiusVisualizer() {
-
-    }
+    virtual ~ClaudiusVisualizer();
 
     static void* creator();
     static MStatus initialize();

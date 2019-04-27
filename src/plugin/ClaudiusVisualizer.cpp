@@ -17,6 +17,10 @@ ClaudiusVisualizer::ClaudiusVisualizer(){
   particleContainer = nullptr;
 }
 
+ClaudiusVisualizer::~ClaudiusVisualizer() {
+    delete particleContainer;
+}
+
 void *ClaudiusVisualizer::creator() {
   cout << "creator" << std::endl;
   return new ClaudiusVisualizer();
@@ -137,3 +141,4 @@ void ClaudiusVisualizer::attributeChangedCallback(MNodeMessage::AttributeMessage
         claudiusVisualizer->readParticles();
     }
 }
+
