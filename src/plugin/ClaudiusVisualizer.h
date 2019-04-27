@@ -6,28 +6,29 @@
 #define CLAUDIUS_SRC_PLUGIN_CLAUDIUSVISUALIZER_H_
 
 #include <maya/MPxLocatorNode.h>
+#include <maya/MObject.h>
 #include <ParticleContainer.h>
 
 class ClaudiusVisualizer:  public MPxLocatorNode{
  public:
-  ClaudiusVisualizer();
-  virtual ~ClaudiusVisualizer() {
+    ClaudiusVisualizer();
+    virtual ~ClaudiusVisualizer() {
 
-  }
+    }
 
-  static void* creator();
-  static MStatus initialize();
+    static void* creator();
+    static MStatus initialize();
 
-  virtual void postConstructor();
-  virtual MStatus compute( const MPlug& plug, MDataBlock& data );
+    virtual void postConstructor();
+    virtual MStatus compute( const MPlug& plug, MDataBlock& data );
 
-  virtual void draw( M3dView & view, const MDagPath & path, M3dView::DisplayStyle style, M3dView::DisplayStatus status);
-  virtual MBoundingBox boundingBox() const;
-  virtual bool isBounded() const;
- public:
-  static MTypeId id;
-  static MString drawDbClassification;
-  ParticleContainer *particleContainer;
+    virtual void draw( M3dView & view, const MDagPath & path, M3dView::DisplayStyle style, M3dView::DisplayStatus status);
+    virtual MBoundingBox boundingBox() const;
+    virtual bool isBounded() const;
+    static MTypeId id;
+    static MString drawDbClassification;
+    static MObject filePathAttribute;
+    ParticleContainer *particleContainer;
 };
 
 #endif //CLAUDIUS_SRC_PLUGIN_CLAUDIUSVISUALIZER_H_
