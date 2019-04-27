@@ -7,7 +7,7 @@
 #include <maya/MPxDrawOverride.h>
 #include "ParticleContainer.h"
 #include "ClaudiusVisualizer.h"
-
+// todo move to own files
 class PartioVisualizerData : public MUserData
 {
  public:

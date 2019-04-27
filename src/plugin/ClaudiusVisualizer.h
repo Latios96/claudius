@@ -8,6 +8,7 @@
 #include <maya/MPxLocatorNode.h>
 #include <maya/MObject.h>
 #include <ParticleContainer.h>
+#include <maya/MNodeMessage.h>
 
 class ClaudiusVisualizer:  public MPxLocatorNode{
  public:
@@ -29,6 +30,10 @@ class ClaudiusVisualizer:  public MPxLocatorNode{
     static MString drawDbClassification;
     static MObject filePathAttribute;
     ParticleContainer *particleContainer;
+ protected:
+  MCallbackId m_attrNameCallbackId;
+  static void attributeChangedCallback(MNodeMessage::AttributeMessage msg, MPlug & plug, MPlug & otherPlug, void* clientData);
+  void readParticles();
 };
 
 #endif //CLAUDIUS_SRC_PLUGIN_CLAUDIUSVISUALIZER_H_
