@@ -14,7 +14,7 @@ def get_current_tag():
 
 
 def collect_files():
-    return ['build/src/Release/raspitolight.mll']
+    return ['build/src/Release/claudius-*.zip']
 
 
 def read_credentials():
