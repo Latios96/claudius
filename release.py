@@ -4,6 +4,7 @@ import os
 import shutil
 import subprocess
 
+import github_release
 from dotenv import load_dotenv
 
 
@@ -41,20 +42,19 @@ def read_credentials():
 def deploy_to_one_drive(files, release=False):
     if release:
         print "doing release"
-    else:
-        print "deploy dev build"
-    matched_files = set()
-    for file_pattern in files:
-        for f in glob.glob(file_pattern):
-            matched_files.add(f)
 
-    for matched_file in matched_files:
-        target = os.path.join(r"C:\release_share\claudius_builds",
-                              'releases' if release else 'dev_builds',
-                              os.path.basename(matched_file))
+        matched_files = set()
+        for file_pattern in files:
+            for f in glob.glob(file_pattern):
+                matched_files.add(f)
 
-        print "copy {} => {}".format(matched_file, target)
-        shutil.copy(matched_file, target)
+        for matched_file in matched_files:
+            target = os.path.join(r"C:\release_share\claudius_builds",
+                                  'releases' if release else 'dev_builds',
+                                  os.path.basename(matched_file))
+
+            print "copy {} => {}".format(matched_file, target)
+            shutil.copy(matched_file, target)
 
 
 def upload_release():
@@ -62,8 +62,8 @@ def upload_release():
     current_tag = get_current_tag()
     files = collect_files()
 
-    # github_release.gh_release_create("Latios96/claudius", current_tag, name=current_tag, asset_pattern=files)
-    # github_release.gh_asset_upload("Latios96/claudius", current_tag, asset_pattern=files)
+    github_release.gh_release_create("Latios96/claudius", current_tag, name=current_tag, asset_pattern=files)
+    github_release.gh_asset_upload("Latios96/claudius", current_tag, asset_pattern=files)
 
 
 if __name__ == '__main__':
