@@ -11,5 +11,5 @@ add_definitions( -DGIT_COMMIT_HASH="${GIT_COMMIT_HASH}" )
 add_subdirectory(utils)
 add_subdirectory(io)
 add_subdirectory(plugin)
-
+add_subdirectory(procedural)
 
