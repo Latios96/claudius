@@ -12,9 +12,11 @@ class ParticleContainer {
   const unsigned int particleCount();
   void addParticle(float x, float y, float z);
   const bool isEmpty();
+  const bool hasColorData();
   const float* getParticleData();
  private:
   std::vector<float> particles;
+  std::vector<int> colors;
 };
 
 #endif //RASPITOLIGHT_SRC_IO_IO_LIB_PARTICLECONTAINER_H_
