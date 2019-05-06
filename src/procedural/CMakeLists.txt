@@ -2,9 +2,10 @@ set(POINT_INSTANCER_SOURCES claudius_particles.cpp)
 
 find_package(Arnold REQUIRED)
 
-add_library(MyPointInstancer SHARED ${POINT_INSTANCER_SOURCES})
+set(LIBRARY_NAME ${PROJECT_NAME}ArnoldProcedural)
+add_library(${LIBRARY_NAME} SHARED ${POINT_INSTANCER_SOURCES})
 
-target_include_directories(MyPointInstancer PUBLIC ${ARNOLD_INCLUDE_DIR})
-target_link_directories(MyPointInstancer PUBLIC ${ARNOLD_LIBRARY_DIR})
+target_include_directories(${LIBRARY_NAME} PUBLIC ${ARNOLD_INCLUDE_DIR})
+target_link_directories(${LIBRARY_NAME} PUBLIC ${ARNOLD_LIBRARY_DIR})
 
-target_link_libraries(MyPointInstancer ai claudius_io_lib)
+target_link_libraries(${LIBRARY_NAME} ai claudius_io_lib)

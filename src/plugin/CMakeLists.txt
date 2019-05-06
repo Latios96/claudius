@@ -9,6 +9,8 @@ set(SOURCE_FILES
         )
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
+# make sure this is build after arnold procedural, so we can copy it in the right directory
+add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}ArnoldProcedural)
 
 find_package(Maya REQUIRED)
 
@@ -40,13 +42,23 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E remove ${MAYA_MODULE_FOLDER}/plug-ins/.gitkeep)
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove ${MAYA_MODULE_FOLDER}/procedurals/.gitkeep)
+
+# copy maya plugin
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${PROJECT_NAME}>/${PROJECT_NAME}.mll ${MAYA_MODULE_FOLDER}/plug-ins/${PROJECT_NAME}.mll)
 
+# copy maya wrapper batch file
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${PROJECT_NAME}>/../${LAUNCH_MAYA_BAT} ${MAYA_MODULE_FOLDER}/${LAUNCH_MAYA_BAT})
-
+# copy maya module
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${PROJECT_NAME}>/../${CLAUDIUS_MAYA_MODULE} ${MAYA_MODULE_FOLDER}/${CLAUDIUS_MAYA_MODULE})
 
+# copy arnold procedural
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${PROJECT_NAME}ArnoldProcedural>/${PROJECT_NAME}ArnoldProcedural.dll ${MAYA_MODULE_FOLDER}/procedurals/${PROJECT_NAME}ArnoldProcedural.dll)
+
+# zip it
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND "C:/Program Files/7-Zip/7z.exe" a -tzip ${MAYA_MODULE_FOLDER}.zip ${MAYA_MODULE_FOLDER})
