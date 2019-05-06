@@ -7,6 +7,29 @@
 #include "PtsParticleReader.h"
 #include "CharBufferOperator.h"
 
+/**
+ * Reads data for a single particle row
+ */
+class ReaderDelegate{
+ public:
+  ReaderDelegate(ParticleContainer &particleContainer, CharBufferOperator &charBufferOperator) : particleContainer(
+      particleContainer), charBufferOperator(charBufferOperator) {}
+      virtual void doRead() = 0;
+ protected:
+  ParticleContainer &particleContainer;
+  CharBufferOperator &charBufferOperator;
+};
+
+class PositionReaderDelegate : public ReaderDelegate{
+ public:
+  PositionReaderDelegate(ParticleContainer &particleContainer, CharBufferOperator &charBufferOperator) : ReaderDelegate(
+      particleContainer,
+      charBufferOperator) {}
+  void doRead() override{
+      // todo read positions
+  }
+};
+
 void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &particleContainer) {
   std::vector<char> str;
   std::vector<float> floats;
@@ -19,7 +42,14 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
   unsigned int i=0;
   
   CharBufferOperator bufferOperator(str);
+  // skip particle count information
   bufferOperator.toFirstCharAfterNewLine();
+  // read first line and check how many values we have
+  std::vector<ReaderDelegate> readerDelegates;
+  readerDelegates.push_back(PositionReaderDelegate(particleContainer, bufferOperator));
+  for(auto &readerDelegate : readerDelegates){
+      readerDelegate.doRead();
+  }
   float x,y,z;
   while(bufferOperator.canContinue()){
     if(bufferOperator.readUntilSpace(bufferString)){
