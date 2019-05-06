@@ -1,0 +1,1 @@
+%ARNOLD_HOME%/bin/kick -l %~dp0\build\src\procedural\Release\MyPointInstancer.dll %~dp0\test\stanford_bunny.ass

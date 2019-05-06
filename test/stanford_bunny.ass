@@ -1,0 +1,58 @@
+### Scene using "simple" shader
+
+options
+{
+ name options
+ camera "camera"
+ AA_samples 4
+ AA_samples_max 8
+}
+
+persp_camera
+{
+ name camera
+  matrix
+  0.997801483 0 -0.0662738979 0
+  -0.00524401478 0.996864617 -0.0789524317 0
+  0.0660661012 0.0791263953 0.994672954 0
+  0.0142244967 0.152927592 0.606664956 1
+}
+
+claudiusparticlecloud
+{
+ name myclaudiusparticlecloud
+ file_path "M:\Projekte\2019\recap_test\StanfordBunny.pts"
+ particle_radius 0.01
+}
+
+quad_light
+{
+ name aiAreaLightShape1
+ matrix
+ -0.69715178 8.32667268e-17 0.716923535 0
+ 0.276443034 0.922667623 0.268819124 0
+ -0.661482155 0.385596275 -0.643239379 0
+ -0.515891671 0.300727546 -0.501664102 1
+ exposure 0
+ cast_shadows on
+ cast_volumetric_shadows on
+ shadow_density 1
+ samples 1
+ normalize on
+ diffuse 1
+ specular 1
+ sss 1
+ indirect 1
+ max_bounces 999
+ volume_samples 2
+ volume 1
+ aov "default"
+ vertices 4 1 b85VECTOR
+yaRT=dzaRT=daRT=dzaRT=dyzyyz
+ resolution 512
+ roundness 0
+ soft_edge 0
+ spread 1
+ declare maya_full_name constant STRING
+ maya_full_name "|aiAreaLight1|aiAreaLightShape1"
+}
