@@ -5,16 +5,12 @@
 #include <ai.h>
 #include <sstream>
 #include <vector>
+#include <fstream>
+#include <ParticleReaderFactory.h>
 
-struct Instancer
-{
-  std::string name;
-  AtArray *path_indices;
-  AtArray *path_start_indices;
-  AtArray *instance_matrix;
-  std::vector<AtNode*> objects;
-  int num_instances;
-};
+// init: read ui parameters
+// get node: create
+
 
 AI_PROCEDURAL_NODE_EXPORT_METHODS(InstancerMtd);
 
@@ -28,7 +24,10 @@ node_parameters
 
 procedural_init
 {
-    Instancer *instancer = new Instancer();
+    // todo read path from ui
+    // todo read particles from disk
+
+    /*Instancer *instancer = new Instancer();
     *user_ptr = instancer;
 
     // get procedural name so it's the prefix of instanced nodes' name
@@ -62,26 +61,29 @@ procedural_init
     instancer->instance_matrix = instance_matrix;
     AiMsgInfo("[instancer] instance_matrix elements: %d, motion keys: %d", AiArrayGetNumElements(instance_matrix), AiArrayGetNumKeys(instance_matrix));
 
+    return true;*/
     return true;
 }
 
 procedural_cleanup
 {
-    Instancer *instancer = (Instancer*)user_ptr;
-    delete instancer;
+    // todo delete particle container
+    /*Instancer *instancer = (Instancer*)user_ptr;
+    delete instancer;*/
     return true;
 }
 
 procedural_num_nodes
 {
     // return how many nodes to generate
-    Instancer *instancer = (Instancer*)user_ptr;
-    return AiArrayGetNumElements(instancer->instance_matrix);
+    /*Instancer *instancer = (Instancer*)user_ptr;
+    return AiArrayGetNumElements(instancer->instance_matrix);*/
+    return 1;
 }
 
 procedural_get_node
 {
-    Instancer *instancer = (Instancer*)user_ptr;
+    /*Instancer *instancer = (Instancer*)user_ptr;
 
     int instance_index = AiArrayGetInt(instancer->path_start_indices, i); // get particle index for this instance
     int path_index = AiArrayGetInt(instancer->path_indices, instance_index);
@@ -115,7 +117,38 @@ procedural_get_node
         AiNodeSetMatrix(currentInstance, "matrix", matrix);
     }
 
-    return currentInstance;
+    return currentInstance;*/
+    AiMsgInfo("[claudius] reading particles from disk..");
+    //const std::string filepath = R"(M:\Projekte\2019\recap_test\Dormagen_City_Export.0001.pts)";
+    const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
+    
+    std::ifstream filestream(filepath);
+
+    auto particleReader = ParticleReaderFactory::createParticleReader(filepath);
+    ParticleContainer particleContainer;
+    particleReader->readParticles(filestream, particleContainer);
+    AiMsgInfo("[claudius] reading particles done.");
+
+    AiMsgInfo("[claudius] copy particles to arnold..");
+    AtArray *pointarray  = AiArrayAllocate(particleContainer.particleCount(), 1, AI_TYPE_VECTOR);
+    AtArray *radiusarray = AiArrayAllocate(particleContainer.particleCount(), 1, AI_TYPE_FLOAT);
+
+    const float *particleData = particleContainer.getParticleData();
+    
+    for(unsigned int i=0; i<particleContainer.particleCount(); i++){
+        AiArraySetVec(pointarray, i, AtVector(particleData[i*3], particleData[i*3+1], particleData[i*3+2]));
+    }
+    
+    for(int i=0; i<particleContainer.particleCount(); i++){
+        AiArraySetFlt(radiusarray, i, 0.01f);
+    }
+
+    AtNode *pointsNode = AiNode("points");
+    AiNodeSetArray(pointsNode, "points", pointarray);
+    AiNodeSetArray(pointsNode, "radius", radiusarray);
+    AiNodeSetStr(pointsNode, "mode", "sphere");
+    AiMsgInfo("[claudius] copy particles to arnold done.");
+    return pointsNode;
 }
 
 node_loader
@@ -124,7 +157,7 @@ node_loader
         return false;
     node->methods      = InstancerMtd;
     node->output_type  = AI_TYPE_NONE;
-    node->name         = "instancer";
+    node->name         = "claudiusparticlecloud";
     node->node_type    = AI_NODE_SHAPE_PROCEDURAL;
     strcpy(node->version, AI_VERSION);
     return true;

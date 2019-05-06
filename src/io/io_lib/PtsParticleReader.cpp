@@ -45,11 +45,13 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
   // skip particle count information
   bufferOperator.toFirstCharAfterNewLine();
   // read first line and check how many values we have
-  std::vector<ReaderDelegate> readerDelegates;
+
+  /*std::vector<ReaderDelegate> readerDelegates;
   readerDelegates.push_back(PositionReaderDelegate(particleContainer, bufferOperator));
   for(auto &readerDelegate : readerDelegates){
       readerDelegate.doRead();
-  }
+  }*/
+
   float x,y,z;
   while(bufferOperator.canContinue()){
     if(bufferOperator.readUntilSpace(bufferString)){
