@@ -1,4 +1,6 @@
 ### Scene using "simple" shader
+ 
+
 
 options
 {
@@ -6,22 +8,26 @@ options
  camera "camera"
  AA_samples 4
  AA_samples_max 8
-}
+ xres 1280
+ yres 720
 
+}
+ 
 persp_camera
 {
  name camera
-  matrix
-  0.997801483 0 -0.0662738979 0
-  -0.00524401478 0.996864617 -0.0789524317 0
-  0.0660661012 0.0791263953 0.994672954 0
-  0.0142244967 0.152927592 0.606664956 1
+ matrix
+ -0.721760213 9.71445147e-17 -0.692143202 0
+ -0.238296747 0.938863993 0.248493552 0
+ 0.649828315 0.34428823 -0.677634716 0
+ 215.16864 60.911808 -113.86306 1
 }
 
+ 
 claudiusparticlecloud
 {
  name myclaudiusparticlecloud
- file_path "M:\Projekte\2019\recap_test\StanfordBunny.pts"
+ file_path "M:\Projekte\2019\recap_test\test.pts"
  particle_radius 0.01
  shader "aiStandardSurface2"
 }
@@ -35,10 +41,11 @@ quad_light
 {
  name aiAreaLightShape1
  matrix
- -0.69715178 8.32667268e-17 0.716923535 0
- 0.276443034 0.922667623 0.268819124 0
- -0.661482155 0.385596275 -0.643239379 0
- -0.515891671 0.300727546 -0.501664102 1
+ 25.2418957 -4.05481978e-16 -14.7153511 0
+ -5.69559383 26.9407501 -9.76990509 0
+ 13.5684109 11.3088837 23.274498 0
+ 113.651329 0 80.2302933 1
+ intensity 10000
  exposure 0
  cast_shadows on
  cast_volumetric_shadows on
