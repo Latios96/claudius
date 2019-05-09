@@ -16,6 +16,7 @@ class PartioVisualizerData : public MUserData
 	  particleContainer = nullptr;
   } 
   ParticleContainer *particleContainer;
+  MMatrix matrix;
   ~PartioVisualizerData() override {};
 };
 

@@ -8,6 +8,9 @@
 #include <maya/MFnDependencyNode.h>
 #include <maya/MHardwareRenderer.h>
 #include <maya/MGLFunctionTable.h>
+#include <maya/MFnDagNode.h>
+#include <maya/MFnTransform.h>
+
 
 
 ClaudiusVisualizerDrawOverride::ClaudiusVisualizerDrawOverride(const MObject &obj) : MPxDrawOverride(obj, &drawCallback) {
@@ -29,6 +32,9 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
                                                       MUserData *oldData) {
   auto *visualizerData = dynamic_cast<PartioVisualizerData*>(oldData);
 
+  MFnDagNode me(objPath);
+  MFnTransform myTransform(me.parent(0));
+
   if(visualizerData == nullptr){
     auto *pData = new PartioVisualizerData();
     if(claudiusVisualizer != nullptr && claudiusVisualizer->particleContainer != nullptr){
@@ -37,12 +43,14 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
     else{
       pData->particleContainer = nullptr;
     }
+      pData->matrix = myTransform.transformation().asMatrix();
     return pData;
   }
   else{
       if(claudiusVisualizer != nullptr && claudiusVisualizer->particleContainer != nullptr){
           visualizerData->particleContainer = claudiusVisualizer->particleContainer;
       }
+      visualizerData->matrix = myTransform.transformation().asMatrix();
       return visualizerData;
   }
 }
@@ -99,6 +107,8 @@ void ClaudiusVisualizerDrawOverride::drawCallback(const MDrawContext& context, c
         if(visualizerData != nullptr){
             if(visualizerData->particleContainer != nullptr){
                 const float* particleData = visualizerData->particleContainer->getParticleData();
+
+                gGLFT->glMultMatrixd((double*)&visualizerData->matrix[0][0]);
 
                 gGLFT->glPointSize(10.0f);
                 gGLFT->glColor3f( 0.0f, 0.0f, 1.0f );
