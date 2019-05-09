@@ -89,8 +89,6 @@ void ClaudiusVisualizerDrawOverride::drawCallback(const MDrawContext& context, c
                 gGLFT->glColor3f( 0.0f, 0.0f, 1.0f );
                 gGLFT->glBegin(MGL_POINTS);
                 for(unsigned int i=0; i<visualizerData->particleContainer->particleCount() * 3; i = i+3){
-                    // cout << i << particleData[i] << " " << particleData[i+1] << " " << particleData[i+2] << std::endl;
-                    //drawManager.point(MPoint(particleData[i], particleData[i+1], particleData[i+2]));
                     gGLFT->glVertex3f( particleData[i], particleData[i+1], particleData[i+2] );
                 }
                 gGLFT->glEnd();
