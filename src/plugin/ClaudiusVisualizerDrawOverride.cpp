@@ -68,31 +68,6 @@ void ClaudiusVisualizerDrawOverride::addUIDrawables(const MDagPath &objPath,
                                                     MHWRender::MUIDrawManager &drawManager,
                                                     const MHWRender::MFrameContext &frameContext,
                                                     const MUserData *data) {
-  /*drawManager.beginDrawable();
-
-  // Draw a text "Foot"
-  MPoint pos( 0.0, 0.0, 0.0 ); // Position of the text
-  MColor textColor( 0.1f, 0.8f, 0.8f, 1.0f ); // Text color
-
-  drawManager.setColor( textColor );
-  drawManager.setFontSize( MHWRender::MUIDrawManager::kSmallFontSize );
-  drawManager.text( pos,  MString("ClaudiusVisualizer"), MHWRender::MUIDrawManager::kCenter );
-
-  auto *visualizerData = dynamic_cast<const PartioVisualizerData*>(data);
-
-  if(visualizerData != nullptr){
-    if(visualizerData->particleContainer != nullptr){
-      const float* particleData = visualizerData->particleContainer->getParticleData();
-
-      for(unsigned int i=0; i<visualizerData->particleContainer->particleCount() * 3; i = i+3){
-        // cout << i << particleData[i] << " " << particleData[i+1] << " " << particleData[i+2] << std::endl;
-        drawManager.point(MPoint(particleData[i], particleData[i+1], particleData[i+2]));
-      }
-
-    }
-  }
-  
-  drawManager.endDrawable();*/
 
 }
 void ClaudiusVisualizerDrawOverride::drawCallback(const MDrawContext& context, const MUserData* data) {
