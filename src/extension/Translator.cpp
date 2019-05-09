@@ -12,6 +12,7 @@ void CTestTranslator::Export(AtNode* claudius_particle_cloud)
 {
     AiNodeSetStr(claudius_particle_cloud, "file_path", FindMayaPlug("particleFile").asString().asChar());
     AiNodeSetFlt(claudius_particle_cloud, "particle_radius", 0.01);
+    ExportMatrix(claudius_particle_cloud);
 }
 
 AtNode* CTestTranslator::CreateArnoldNodes()
