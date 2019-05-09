@@ -20,3 +20,11 @@ const float *ParticleContainer::getParticleData() {
 const bool ParticleContainer::hasColorData() {
     return !particles.empty();
 }
+const int *ParticleContainer::getColorData() {
+    return colors.data();
+}
+void ParticleContainer::addColor(int r, int g, int b) {
+   colors.emplace_back(r);
+   colors.emplace_back(g);
+   colors.emplace_back(b);
+}
