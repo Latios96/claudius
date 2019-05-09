@@ -10,7 +10,7 @@ set(SOURCE_FILES
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 # make sure this is build after arnold procedural, so we can copy it in the right directory
-add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}ArnoldProcedural)
+add_dependencies(${PROJECT_NAME} ${PROJECT_NAME}ArnoldProcedural ${PROJECT_NAME}MtoaExtension)
 
 find_package(Maya REQUIRED)
 
@@ -43,6 +43,8 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E remove ${MAYA_MODULE_FOLDER}/plug-ins/.gitkeep)
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E remove ${MAYA_MODULE_FOLDER}/procedurals/.gitkeep)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E remove ${MAYA_MODULE_FOLDER}/extensions/.gitkeep)
 
 # copy maya plugin
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
@@ -58,6 +60,10 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 # copy arnold procedural
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${PROJECT_NAME}ArnoldProcedural>/${PROJECT_NAME}ArnoldProcedural.dll ${MAYA_MODULE_FOLDER}/procedurals/${PROJECT_NAME}ArnoldProcedural.dll)
+
+# copy arnold extension
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE_DIR:${PROJECT_NAME}MtoaExtension>/${PROJECT_NAME}MtoaExtension.dll ${MAYA_MODULE_FOLDER}/extensions/${PROJECT_NAME}MtoaExtension.dll)
 
 # zip it
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
