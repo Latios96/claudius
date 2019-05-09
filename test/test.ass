@@ -10,7 +10,6 @@ options
  AA_samples_max 8
  xres 1280
  yres 720
-
 }
  
 persp_camera

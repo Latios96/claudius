@@ -50,7 +50,6 @@ MStatus ClaudiusVisualizer::initialize() {
 }
 
 void ClaudiusVisualizer::postConstructor() {
-    cout << "postConstructor" << std::endl;
     MStatus stat;
     MObject node = thisMObject();
     m_attrNameCallbackId = MNodeMessage::addAttributeChangedCallback(node, attributeChangedCallback, this, &stat);
@@ -61,13 +60,8 @@ void ClaudiusVisualizer::postConstructor() {
 }
 
 MStatus ClaudiusVisualizer::compute(const MPlug &plug, MDataBlock &data) {
-    cout << "Compute" << std::endl;
-
     if(particleContainer == nullptr){
         readParticles();
-    }
-    else{
-        cout << "already computed with " << particleContainer->particleCount() << " particles" << std::endl;
     }
     return MStatus::kSuccess;
 }
@@ -93,19 +87,11 @@ void ClaudiusVisualizer::readParticles() {
             particleContainer = nullptr;
             delete oldParticleContainer;
         }
-        cout << "Opening streame" << std::endl;
         std::ifstream filestream(filepath);
 
         auto particleReader = ParticleReaderFactory::createParticleReader(filepath);
         particleContainer = new ParticleContainer();
-        cout << "reading data" << std::endl;
         particleReader->readParticles(filestream, *particleContainer);
-        cout << "data reading finished" << std::endl;
-
-        cout << particleContainer->particleCount() << std::endl;
-    }
-    else{
-        cout << "Could not read file \"" << particleFile <<"\"" << std::endl;
     }
 }
 
@@ -113,11 +99,9 @@ void ClaudiusVisualizer::draw(M3dView &view,
                               const MDagPath &path,
                               M3dView::DisplayStyle style,
                               M3dView::DisplayStatus status) {
-    cout << "draw" << std::endl;
 }
 
 MBoundingBox ClaudiusVisualizer::boundingBox() const {
-    cout << "boundingBox" << std::endl;
     return MBoundingBox();
 }
 

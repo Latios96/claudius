@@ -5,15 +5,16 @@
 #ifndef CLAUDIUS_SRC_EXTENSION_TRANSLATOR_H_
 #define CLAUDIUS_SRC_EXTENSION_TRANSLATOR_H_
 
-#include <translators/shader/ShaderTranslator.h>
+#include "translators/DagTranslator.h"
 
 
 class CTestTranslator
-    : public CShaderTranslator
+    : public CDagTranslator
 {
  public:
   AtNode* CreateArnoldNodes();
   virtual void Export(AtNode*);
+  void Update(AtNode*);
   static void* creator();
 };
 

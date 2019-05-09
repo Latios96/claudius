@@ -27,13 +27,11 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
                                                       const MDagPath &cameraPath,
                                                       const MFrameContext &frameContext,
                                                       MUserData *oldData) {
-    cout << "prepare for draw" << std::endl;
   auto *visualizerData = dynamic_cast<PartioVisualizerData*>(oldData);
 
   if(visualizerData == nullptr){
     auto *pData = new PartioVisualizerData();
     if(claudiusVisualizer != nullptr && claudiusVisualizer->particleContainer != nullptr){
-        cout << "setting particle container with " << claudiusVisualizer->particleContainer->particleCount() << " particles" << std::endl;
       pData->particleContainer = claudiusVisualizer->particleContainer;
     }
     else{
@@ -43,7 +41,6 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
   }
   else{
       if(claudiusVisualizer != nullptr && claudiusVisualizer->particleContainer != nullptr){
-          cout << "setting particle container with " << claudiusVisualizer->particleContainer->particleCount() << " particles" << std::endl;
           visualizerData->particleContainer = claudiusVisualizer->particleContainer;
       }
       return visualizerData;

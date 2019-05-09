@@ -33,7 +33,6 @@ MString _generateNodeName(MString fileNameMString){
 MStatus PointCloudFileTranslator::reader(const MFileObject &file,
                                          const MString &optionsString,
                                          MPxFileTranslator::FileAccessMode mode) {
-    cout << "Reading file " << file.rawFullName() << std::endl;
     MFnDagNode visualizerDagNode;
     visualizerDagNode.create("ClaudiusVisualizer");
 

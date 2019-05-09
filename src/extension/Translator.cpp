@@ -8,22 +8,20 @@
 #include <ai_nodes.h>
 
 
-void CTestTranslator::Export(AtNode* shader)
+void CTestTranslator::Export(AtNode* claudius_particle_cloud)
 {
-    AiMsgInfo("[test extension] Exporting %s", GetMayaNodeName().asChar());
-    AiNodeSetFlt(shader, "base", FindMayaPlug("diffuse").asFloat() );
-    AiNodeSetRGB(shader, "base_color",
-                 FindMayaPlug("colorR").asFloat(),
-                 FindMayaPlug("colorG").asFloat(),
-                 FindMayaPlug("colorB").asFloat());
+    AiNodeSetStr(claudius_particle_cloud, "file_path", FindMayaPlug("particleFile").asString().asChar());
+    AiNodeSetFlt(claudius_particle_cloud, "particle_radius", 0.01);
 }
 
 AtNode* CTestTranslator::CreateArnoldNodes()
 {
-    return AddArnoldNode("standard_surface");
+    return AddArnoldNode("claudiusparticlecloud");
 }
 
 void* CTestTranslator::creator()
 {
     return new CTestTranslator();
+}
+void CTestTranslator::Update(AtNode *node) {
 }

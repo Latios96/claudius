@@ -10,7 +10,8 @@ extern "C"
 {
 DLLEXPORT void initializeExtension(CExtension &plugin)
 {
-    plugin.RegisterTranslator("phong",
+    cout << "Register Extension" << std::endl;
+    plugin.RegisterTranslator("ClaudiusVisualizer",
                               "",
                               CTestTranslator::creator);
 }
