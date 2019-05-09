@@ -62,7 +62,8 @@ int aamain(){
 
 int main(){
   std::cout << aboutClaudius() << std::endl;
-  const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
+  //const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
+    const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
   //const std::string filepath = R"(M:\Projekte\2019\recap_test\Aero_Scan.pts)";
   //const std::string filepath = R"(M:\Projekte\2019\recap_test\Dormagen_City_Export.0001.pts)";
   

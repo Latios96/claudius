@@ -125,7 +125,9 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
 			particleContainer.addColor(std::stoi(vector[3]), std::stoi(vector[4]), std::stoi(vector[5]));
         }
         else if(positionRemissionAndRgb){
-
+            particleContainer.addParticle(std::stof(vector[0]), std::stof(vector[1]), std::stof(vector[2]));
+            particleContainer.addRemission(std::stof(vector[3]));
+            particleContainer.addColor(std::stoi(vector[4]), std::stoi(vector[5]), std::stoi(vector[6]));
         }
         else if(positionRemissionQualityAndRgb){
 

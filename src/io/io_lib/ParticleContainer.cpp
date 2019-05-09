@@ -28,3 +28,12 @@ void ParticleContainer::addColor(int r, int g, int b) {
    colors.emplace_back(g);
    colors.emplace_back(b);
 }
+const bool ParticleContainer::hasRemissionData() {
+    return !remissions.empty();
+}
+const float *ParticleContainer::getRemissionsData() {
+    return remissions.data();
+}
+void ParticleContainer::addRemission(float r) {
+    remissions.emplace_back(r);
+}
