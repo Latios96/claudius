@@ -23,7 +23,7 @@ persp_camera
 claudiusparticlecloud
 {
  name myclaudiusparticlecloud
- file_path "M:\Projekte\2019\recap_test\Dormagen_City_Export.0001.pts"
+ file_path "M:\Projekte\2019\recap_test\StanfordBunny.pts"
  particle_radius 0.01
  shader "aiStandardSurface2"
 }
@@ -31,6 +31,14 @@ claudiusparticlecloud
 standard_surface
 {
  name aiStandardSurface2
+ base 1
+ base_color userDataColor
+}
+
+user_data_rgb
+{
+ name userDataColor
+ attribute "particle_color"
 }
 
 quad_light

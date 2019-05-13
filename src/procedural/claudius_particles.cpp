@@ -43,6 +43,10 @@ procedural_num_nodes
     return 1;
 }
 
+float color_int_to_float(int value){
+    return ((float) value) / 255;
+}
+
 procedural_get_node
 {
     auto *pointCloudData = (PointCloudData*)user_ptr;
@@ -56,7 +60,7 @@ procedural_get_node
     ParticleContainer particleContainer;
     particleReader->readParticles(filestream, particleContainer);
     AiMsgInfo("[claudius] reading particles done.");
-
+    
     AiMsgInfo("[claudius] copy particles to arnold..");
     AtArray *pointarray  = AiArrayAllocate(particleContainer.particleCount(), 1, AI_TYPE_VECTOR);
     AtArray *radiusarray = AiArrayAllocate(particleContainer.particleCount(), 1, AI_TYPE_FLOAT);
@@ -75,6 +79,24 @@ procedural_get_node
     AiNodeSetArray(pointsNode, "points", pointarray);
     AiNodeSetArray(pointsNode, "radius", radiusarray);
     AiNodeSetStr(pointsNode, "mode", "sphere");
+
+    AiMsgInfo("[claudius] particles have color: %s", particleContainer.hasColorData() ? "yes" : "no");
+    if(particleContainer.hasColorData()){
+
+        bool b = AiNodeDeclare(pointsNode, "particle_color", "uniform RGB");
+        AiMsgInfo("[claudius] created color userdata attribute: %s", b ? "true": "false");
+        AtArray *colorarray  = AiArrayAllocate(particleContainer.particleCount(), 1, AI_TYPE_RGB);
+
+        AiMsgInfo("[claudius] copy particles color to arnold..");
+        const int *colorData = particleContainer.getColorData();
+        for(unsigned int i=0; i<particleContainer.particleCount(); i++){
+            const AtRGB rgb = AtRGB(color_int_to_float(colorData[i * 3]),
+                                     color_int_to_float(colorData[i * 3 + 1]),
+                                     color_int_to_float(colorData[i * 3 + 2]));
+            AiArraySetRGB(colorarray, i, rgb);
+        }
+        AiNodeSetArray(pointsNode, "particle_color", colorarray);
+    }
 
     AiMsgInfo("[claudius] copy particles to arnold done.");
     return pointsNode;
