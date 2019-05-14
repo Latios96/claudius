@@ -18,7 +18,7 @@ const float *ParticleContainer::getParticleData() {
   return particles.data();
 }
 const bool ParticleContainer::hasColorData() {
-    return !particles.empty();
+    return !colors.empty();
 }
 const int *ParticleContainer::getColorData() {
     return colors.data();

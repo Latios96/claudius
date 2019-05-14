@@ -74,6 +74,8 @@ int main(){
   ParticleContainer particleContainer;
   particleReader->readParticles(filestream, particleContainer);
 
+  const bool hasColor = particleContainer.hasColorData();
+
   std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
   auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
   std::cout << microseconds *0.0000006 << std::endl;
