@@ -5,13 +5,16 @@
 #include <fstream>
 #include <ParticleReaderFactory.h>
 #include <maya/MFnStringData.h>
+#include <maya/MFnNumericData.h>
 #include <maya/MFnTypedAttribute.h>
+#include <maya/MFnNumericAttribute.h>
 #include <maya/MEventMessage.h>
 #include <maya/MGlobal.h>
 
 MString ClaudiusVisualizer::drawDbClassification("drawdb/geometry/claudiusVisualizer");
 MTypeId ClaudiusVisualizer::id(0x80007);
 MObject ClaudiusVisualizer::filePathAttribute;
+MObject ClaudiusVisualizer::renderWithColorAttribute;
 
 ClaudiusVisualizer::ClaudiusVisualizer(){
   particleContainer = nullptr;
@@ -45,6 +48,15 @@ MStatus ClaudiusVisualizer::initialize() {
     typedStringAttribute.setConnectable(true);
     typedStringAttribute.setStorable(true);
     addAttribute(filePathAttribute);
+
+    MFnNumericAttribute typedBoolAttribute;
+    renderWithColorAttribute = typedBoolAttribute.create("renderWithColor", "withColor", MFnNumericData::kBoolean);
+    typedBoolAttribute.setReadable(true);
+    typedBoolAttribute.setWritable(true);
+    typedBoolAttribute.setKeyable(false);
+    typedBoolAttribute.setConnectable(true);
+    typedBoolAttribute.setStorable(true);
+    addAttribute(renderWithColorAttribute);
 
     return MStatus::kSuccess;
 }

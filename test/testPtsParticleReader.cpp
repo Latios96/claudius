@@ -10,10 +10,10 @@ TEST_CASE("PtsParticleReader"){
 
   SECTION("shouldReadPositionsCorrectly"){
       const std::string data = "4      \n"
-                               "-1.0 0.0 1.0\n"
-                               "2.0 3.0 4.0\n"
-                               "5.0 6.0 7.0\n"
-                               "8.0 9.0 10.0\n";
+                               "-1.0 1.0 0.0\n"
+                               "2.0 4.0 3.0\n"
+                               "5.0 7.0 6.0\n"
+                               "8.0 10.0 9.0\n";
       std::stringstream ss(data);
       PtsParticleReader ptsParticleReader;
       ParticleContainer particleContainer;
@@ -30,10 +30,10 @@ TEST_CASE("PtsParticleReader"){
 
     SECTION("shouldReadPositionsAndRgbCorrectly"){
         const std::string data = "4      \n"
-                                 "-1.0 0.0 1.0 100 101 102\n"
-                                 "2.0 3.0 4.0 103 104 105\n"
-                                 "5.0 6.0 7.0 106 107 108\n"
-                                 "8.0 9.0 10.0 109 110 111\n";
+                                 "-1.0 1.0 0.0 100 101 102\n"
+                                 "2.0 4.0 3.0 103 104 105\n"
+                                 "5.0 7.0 6.0 106 107 108\n"
+                                 "8.0 10.0 9.0 109 110 111\n";
         std::stringstream ss(data);
         PtsParticleReader ptsParticleReader;
         ParticleContainer particleContainer;
@@ -52,10 +52,10 @@ TEST_CASE("PtsParticleReader"){
 
     SECTION("shouldReadPositionsRemissionAndRgbCorrectly"){
         const std::string data = "4      \n"
-                                 "-1.0 0.0 1.0 50 100 101 102\n"
-                                 "2.0 3.0 4.0 51 103 104 105\n"
-                                 "5.0 6.0 7.0 52 106 107 108\n"
-                                 "8.0 9.0 10.0 53 109 110 111\n";
+                                 "-1.0 1.0 0.0 50 100 101 102\n"
+                                 "2.0 4.0 3.0 51 103 104 105\n"
+                                 "5.0 7.0 6.0 52 106 107 108\n"
+                                 "8.0 10.0 9.0 53 109 110 111\n";
         std::stringstream ss(data);
         PtsParticleReader ptsParticleReader;
         ParticleContainer particleContainer;
