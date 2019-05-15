@@ -136,44 +136,6 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
         bufferOperator.toFirstCharAfterNewLine();
     }
 
-  /*float x,y,z;
-  while(bufferOperator.canContinue()){
-    if(bufferOperator.readUntilSpace(bufferString)){
-		if (!bufferString.empty()) {
-			x = std::stof(bufferString);
-			bufferString.clear();
-		}
-		else {
-			break;
-		}
-      
-    }
-    else{
-      break;
-    }
-
-    bufferOperator.toFirstCharAfterSpace();
-    if(bufferOperator.readUntilSpace(bufferString)){
-      y = std::stof(bufferString);
-      bufferString.clear();
-    }
-    else{
-      break;
-    }
-
-	bufferOperator.toFirstCharAfterSpace();
-    if(bufferOperator.readUntilNewLine(bufferString)){
-      z = std::stof(bufferString);
-      bufferString.clear();
-    }
-    else{
-      break;
-    }
-
-    particleContainer.addParticle(x,y,z);
-    bufferOperator.toFirstCharAfterNewLine();
-  }*/
-
 }
 std::string PtsParticleReader::getReaderName() {
   return "pts";
