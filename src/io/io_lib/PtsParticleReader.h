@@ -11,6 +11,8 @@ class PtsParticleReader : public ParticleReader{
  public:
   void readParticles(std::istream &file, ParticleContainer &particleContainer) override;
   std::string getReaderName() override;
+ private:
+  void processChunk(std::vector<char> &vector, ParticleContainer &particleContainer);
 };
 
 #endif //RASPITOLIGHT_SRC_IO_IO_LIB_PTSPARTICLEREADER_H_
