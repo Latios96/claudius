@@ -37,3 +37,12 @@ const float *ParticleContainer::getRemissionsData() {
 void ParticleContainer::addRemission(float r) {
     remissions.emplace_back(r);
 }
+void ParticleContainer::reservePositions(unsigned int count) {
+    particles.reserve(count * 3);
+}
+void ParticleContainer::reserveColors(unsigned int count) {
+    colors.reserve(count * 3);
+}
+void ParticleContainer::reserveRemissions(unsigned int count) {
+    remissions.reserve(count);
+}

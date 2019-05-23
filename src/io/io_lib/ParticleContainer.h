@@ -13,6 +13,9 @@ class ParticleContainer {
   void addParticle(float x, float y, float z);
   void addColor(int r, int g, int b);
   void addRemission(float r);
+  void reservePositions(unsigned int count);
+  void reserveColors(unsigned int count);
+  void reserveRemissions(unsigned int count);
   const bool isEmpty();
   const bool hasColorData();
   const bool hasRemissionData();
