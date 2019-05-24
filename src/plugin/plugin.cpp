@@ -1,4 +1,5 @@
 #include <maya/MFnPlugin.h>
+#include <maya/MGlobal.h>
 #include "ClaudiusVisualizer.h"
 #include "ClaudiusVisualizerDrawOverride.h"
 #include "PointCloudFileTranslator.h"
@@ -19,6 +20,13 @@ MStatus initializePlugin(MObject obj)
     {
         status.perror("register PartioVisualizer");
         return status;
+    }
+
+    // Run MEL script for user interface initialization.
+    if (MGlobal::mayaState() == MGlobal::kInteractive)
+    {
+        MString sCmd = R"(python "from claudius import menu;menu.create_menu();")";
+        MGlobal::executeCommand( sCmd );
     }
 
     status = MHWRender::MDrawRegistry::registerDrawOverrideCreator(
@@ -72,6 +80,12 @@ MStatus uninitializePlugin(MObject obj)
     if (!status)
     {
         status.perror("deregisterFileTranslator");
+    }
+
+    if (MGlobal::mayaState() == MGlobal::kInteractive)
+    {
+        MString sCmd = R"(python "from claudius import menu;menu.remove_menu();")";
+        MGlobal::executeCommand( sCmd );
     }
 
   return status;

@@ -141,7 +141,7 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
 	std::vector<std::string> vec;
 	split(bufferString, vec);
 
-	const bool positionOnly = true;// vector.size() == 3;
+	const bool positionOnly = vec.size() == 3;
     const bool positionAndRgb = vec.size() == 6;
     const bool positionRemissionAndRgb = vec.size() == 7;
     const bool positionRemissionQualityAndRgb = vec.size() == 8;
@@ -208,12 +208,11 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
 			float y = std::stof(bufferString);
 			bufferString.clear();
             particleContainer.addParticle(x,y,z);*/
-			/*split(bufferString, vector);
-            particleContainer.addParticle(std::stof(vector[PTS_X_INDEX]), std::stof(vector[PTS_Y_INDEX]), std::stof(vector[PTS_Z_INDEX]));*/
+			split(bufferString, vector);
+            particleContainer.addParticle(std::stof(vector[PTS_X_INDEX]), std::stof(vector[PTS_Y_INDEX]), std::stof(vector[PTS_Z_INDEX]));
         }
         else if(positionAndRgb){
-			
-			bufferOperator.readUntilSpace(bufferString);
+			/*bufferOperator.readUntilSpace(bufferString);
 			float x = std::stof(bufferString);
 			bufferString.clear();
 			bufferOperator.toFirstCharAfterSpace();
@@ -239,10 +238,10 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
 			int b = std::stoi(bufferString);
 			bufferString.clear();
 			bufferOperator.toFirstCharAfterSpace();
-			particleContainer.addColor(r,g,b);
-			/*split(bufferString, vector);
+			particleContainer.addColor(r,g,b);*/
+			split(bufferString, vector);
 			particleContainer.addParticle(std::stof(vector[PTS_X_INDEX]), std::stof(vector[PTS_Y_INDEX]), std::stof(vector[PTS_Z_INDEX]));
-			particleContainer.addColor(std::stoi(vector[3]), std::stoi(vector[4]), std::stoi(vector[5]));*/
+			particleContainer.addColor(std::stoi(vector[3]), std::stoi(vector[4]), std::stoi(vector[5]));
         }
         else if(positionRemissionAndRgb){
 			split(bufferString, vector);
