@@ -34,7 +34,7 @@ def export_node_to_ass(claudius_node, target_path):
 
 def chunks_to_ass(file_counter, output_template):
     claudius_node = pm.createNode('ClaudiusVisualizer')
-    # claudius_node.renderWithColor.set(True)
+    claudius_node.renderWithColor.set(True)
 
     for i, chunk_file in enumerate(glob.glob(output_template.format('*'))):
         print "Converting chunk {}".format(i)
