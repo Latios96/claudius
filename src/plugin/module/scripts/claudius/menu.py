@@ -8,7 +8,7 @@ def create_menu():
     # Build a menu and parent underthe Maya Window
     customMenu = pm.menu('Claudius', parent=MainMayaWindow)
     # Build a menu item and parent under the 'customMenu'
-    pm.menuItem(label="Convert Point Cloud", command="from claudius import conversion;conversion.do_convert()",
+    pm.menuItem(label="Import Point Cloud", command="from claudius import conversion;conversion.do_convert()",
                 parent=customMenu)
 
 

@@ -1,8 +1,8 @@
-import glob
 import os
-import pymel.core as pm
-import maya.cmds as cmds
 import time
+
+import maya.cmds as cmds
+import pymel.core as pm
 from PySide2 import QtWidgets
 
 MAX = 13000000
@@ -104,7 +104,7 @@ def import_ass_files(ass_files):
 
 
 def do_convert():
-    input_path = QtWidgets.QFileDialog.getOpenFileName()[0] # todo check for .pts files
+    input_path = QtWidgets.QFileDialog.getOpenFileName()[0]  # todo check for .pts files
     if input_path:
         output_template = create_output_template(os.path.dirname(input_path), input_path)
         ass_files = process_file(input_path, output_template)
