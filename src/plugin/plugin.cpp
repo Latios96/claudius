@@ -9,8 +9,8 @@
 MStatus initializePlugin(MObject obj)
 {
     MStatus status;
-    // TODO get version from cmake
-    MFnPlugin plugin(obj, "Jan Honsbrok", getClaudiusVersion().c_str(), "Any");
+
+    MFnPlugin plugin(obj, "Jan Honsbrok, <jan.honsbrok@gmail.com>", getClaudiusVersion().c_str(), "Any");
 
     status = plugin.registerNode("ClaudiusVisualizer", ClaudiusVisualizer::id,
                                &ClaudiusVisualizer::creator, &ClaudiusVisualizer::initialize,

@@ -81,7 +81,7 @@ procedural_get_node
     AiNodeSetStr(pointsNode, "mode", "sphere");
 
     AiMsgInfo("[claudius] particles have color: %s", particleContainer.hasColorData() ? "yes" : "no");
-    if(particleContainer.hasColorData() == true){
+    if(particleContainer.hasColorData()){
 
         bool b = AiNodeDeclare(pointsNode, "particle_color", "uniform RGB");
         AiMsgInfo("[claudius] created color userdata attribute: %s", b ? "true": "false");

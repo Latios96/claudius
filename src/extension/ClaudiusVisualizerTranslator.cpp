@@ -2,7 +2,7 @@
 // Created by Jan on 08.05.2019.
 //
 
-#include "Translator.h"
+#include "ClaudiusVisualizerTranslator.h"
 
 #include <ai_msg.h>
 #include <ai_nodes.h>

@@ -2,8 +2,8 @@ set(LIBRARY_NAME ${PROJECT_NAME}MtoaExtension)
 
 set(LIB_SRCS
         extension.cpp
-        Translator.h
-        Translator.cpp
+        ClaudiusVisualizerTranslator.h
+        ClaudiusVisualizerTranslator.cpp
         )
 
 find_package(MtoA REQUIRED)

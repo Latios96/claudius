@@ -2,7 +2,7 @@ set(TARGET_NAME tests)
 
 add_executable(${TARGET_NAME}
   main.cpp
-    testParticleContainer.cpp testParticleReaderFactory.cpp testPtsParticleReader.cpp testCharBufferOperator.cpp)
+    testParticleContainer.cpp testParticleReaderFactory.cpp testPtsParticleReader.cpp)
 
 target_link_libraries(${TARGET_NAME}
   PUBLIC claudius_io_lib)
