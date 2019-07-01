@@ -27,7 +27,6 @@ def should_release():
 
 
 def get_current_tag():
-    # return subprocess.check_output("git tag -l --points-at HEAD")
     return subprocess.check_output("git describe --tags").replace("\n", "")
 
 
