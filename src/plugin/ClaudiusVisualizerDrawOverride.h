@@ -7,49 +7,69 @@
 #include <maya/MPxDrawOverride.h>
 #include "ParticleContainer.h"
 #include "ClaudiusVisualizer.h"
-// todo move to own files
-class PartioVisualizerData : public MUserData
-{
- public:
-  PartioVisualizerData() : MUserData(false) {
-	  // don't delete after draw
-	  particleContainer = nullptr;
-  } 
-  ParticleContainer *particleContainer;
-  MMatrix matrix;
-  ~PartioVisualizerData() override {};
+#include <fstream>
+#include <ParticleReaderFactory.h>
+#include <maya/MFnDependencyNode.h>
+#include <maya/MHardwareRenderer.h>
+#include <maya/MGLFunctionTable.h>
+#include <maya/MFnDagNode.h>
+#include <maya/MFnTransform.h>
+
+struct DisplayOptions {
+  DisplayOptions();
+  DisplayOptions(const MString &particleFilePath, bool displayColor, int displayPercentage);
+  MString particleFilePath;
+  bool displayColor = true;
+  int displayEveryNth = 100;
+  bool operator==(const DisplayOptions &rhs) const;
+  bool operator!=(const DisplayOptions &rhs) const;
 };
 
-class ClaudiusVisualizerDrawOverride : public MPxDrawOverride
-{
+// todo move to own files
+class PartioVisualizerData : public MUserData {
  public:
-  ClaudiusVisualizerDrawOverride(const MObject& obj);
+  PartioVisualizerData() : MUserData(false) {
+      // don't delete after draw
+      particleContainer = nullptr;
+  }
+  ParticleContainer *particleContainer;
+  MMatrix matrix;
+  DisplayOptions displayOptions;
+
+  MGLuint currentDisplayList = -1;
+  ~PartioVisualizerData() override {};
+};
+class ClaudiusVisualizerDrawOverride : public MPxDrawOverride {
+ public:
+  ClaudiusVisualizerDrawOverride(const MObject &obj);
   virtual ~ClaudiusVisualizerDrawOverride();
 
-  static MPxDrawOverride* creator(const MObject& obj);
+  static MPxDrawOverride *creator(const MObject &obj);
 
  public:
   static MTypeId id;
 
-  static void drawCallback(const MDrawContext& context, const MUserData* data);
+  static void drawCallback(const MDrawContext &context, const MUserData *data);
 
  protected:
-  virtual MUserData* prepareForDraw(
-      const MDagPath& objPath,
-      const MDagPath& cameraPath,
-      const MFrameContext& frameContext,
-      MUserData* oldData);
+  virtual MUserData *prepareForDraw(
+      const MDagPath &objPath,
+      const MDagPath &cameraPath,
+      const MFrameContext &frameContext,
+      MUserData *oldData);
   void addUIDrawables(
-      const MDagPath& objPath,
-      MHWRender::MUIDrawManager& drawManager,
-      const MHWRender::MFrameContext& frameContext,
-      const MUserData* data) override;
+      const MDagPath &objPath,
+      MHWRender::MUIDrawManager &drawManager,
+      const MHWRender::MFrameContext &frameContext,
+      const MUserData *data) override;
 
   bool hasUIDrawables() const override { return true; }
 
   MHWRender::DrawAPI supportedDrawAPIs() const override;
 
-  ClaudiusVisualizer* claudiusVisualizer;
+  ClaudiusVisualizer *claudiusVisualizer;
+  void generateDisplayList(PartioVisualizerData *visualizerData, DisplayOptions &displayOptions);
+  DisplayOptions createDisplayOptions();
 };
 
 #endif //CLAUDIUS_SRC_PLUGIN_CLAUDIUSVISUALIZERDRAWOVERRIDE_H_
