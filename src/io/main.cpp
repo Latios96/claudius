@@ -65,8 +65,8 @@ int main(){
   //const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
   //const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
   //const std::string filepath = R"(M:\Projekte\2019\recap_test\Aero_Scan.pts)";
-  //const std::string filepath = R"(M:\Projekte\2019\recap_test\Dormagen_City_Export.0001.pts)";
-  const std::string filepath = R"(M:\Projekte\2019\recap_test\KulturGut_130m - Cloud.pts)";
+  const std::string filepath = R"(M:\Projekte\2019\recap_test\Dormagen_City_Export.0001.pts)";
+  //const std::string filepath = R"(M:\Projekte\2019\recap_test\KulturGut_130m - Cloud.pts)";
   //const std::string filepath = R"(M:\Projekte\2019\recap_test\KulturGut_130m_13000000_with_headers.pts)";
   //const std::string filepath = R"(M:\Projekte\2019\recap_test\KulturGut_130m_130.pts)";
   

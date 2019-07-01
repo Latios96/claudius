@@ -18,14 +18,14 @@ void split(std::string const &original, std::vector<std::string> &results) {
     std::string::const_iterator next = std::find(start, end, ' ');
     while (next != end) {
         auto x = std::string(start, next);
-        if (x != "") {
+        if (!x.empty()) {
             results.push_back(x);
         }
         start = next + 1;
         next = std::find(start, end, ' ');
     }
-    if (std::string(start, next) != "") {
-        results.push_back(std::string(start, next));
+    if (!std::string(start, next).empty()) {
+        results.emplace_back(start, next);
     }
 
 }
