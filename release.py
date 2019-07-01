@@ -4,9 +4,6 @@ import os
 import shutil
 import subprocess
 
-import github_release
-from dotenv import load_dotenv
-
 
 def read_current_version():
     config = ConfigParser.ConfigParser()
@@ -34,10 +31,6 @@ def collect_files():
     return ['build/src/plugin/Release/claudius-*.zip']
 
 
-def read_credentials():
-    load_dotenv()
-
-
 def deploy_to_one_drive(files, release=False):
     if release:
         print "doing release"
@@ -54,15 +47,6 @@ def deploy_to_one_drive(files, release=False):
 
             print "copy {} => {}".format(matched_file, target)
             shutil.copy(matched_file, target)
-
-
-def upload_release():
-    read_credentials()
-    current_tag = get_current_tag()
-    files = collect_files()
-
-    github_release.gh_release_create("Latios96/claudius", current_tag, name=current_tag, asset_pattern=files)
-    github_release.gh_asset_upload("Latios96/claudius", current_tag, asset_pattern=files)
 
 
 if __name__ == '__main__':
