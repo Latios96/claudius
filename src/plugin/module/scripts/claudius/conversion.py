@@ -112,8 +112,8 @@ class PointCloudConverter(object):
             cmds.file(ass_files, i=True)
 
 
-def do_convert():
+def do_convert(with_colors=True, chunk_size=13000000):
     input_path = QtWidgets.QFileDialog.getOpenFileName()[0]  # todo check for .pts files
     if input_path:
-        converter = PointCloudConverter(input_path, True, 13000000)
+        converter = PointCloudConverter(input_path, with_colors, chunk_size)
         converter.convert()
