@@ -25,25 +25,26 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
 
     MFnDagNode me(objPath);
     MFnTransform myTransform(me.parent(0));
+    MMatrix matrix = objPath.inclusiveMatrix();
 
     if (visualizerData == nullptr) {
         auto *pData = new PartioVisualizerData();
         if (claudiusVisualizer != nullptr && claudiusVisualizer->particleContainer != nullptr) {
             pData->particleContainer = claudiusVisualizer->particleContainer;
-            DisplayOptions displayOptions = createDisplayOptions();
+            DisplayOptions displayOptions = createDisplayOptions(myTransform.transformation().asMatrix());
             generateDisplayList(pData, displayOptions);
         } else {
             pData->particleContainer = nullptr;
         }
-        pData->matrix = myTransform.transformation().asMatrix();
+        pData->matrix = matrix;
         return pData;
     } else {
         if (claudiusVisualizer != nullptr && claudiusVisualizer->particleContainer != nullptr) {
             visualizerData->particleContainer = claudiusVisualizer->particleContainer;
-            DisplayOptions displayOptions = createDisplayOptions();
+            DisplayOptions displayOptions = createDisplayOptions(myTransform.transformation().asMatrix());
             generateDisplayList(visualizerData, displayOptions);
         }
-        visualizerData->matrix = myTransform.transformation().asMatrix();
+        visualizerData->matrix = matrix;
         return visualizerData;
     }
 }
@@ -74,6 +75,7 @@ void ClaudiusVisualizerDrawOverride::drawCallback(const MDrawContext &context, c
 
         if (visualizerData != nullptr) {
             if (visualizerData->particleContainer != nullptr) {
+                cout << "drawing using " << visualizerData->currentDisplayList << std::endl;
                 gGLFT->glCallList(visualizerData->currentDisplayList);
             }
         }
@@ -97,22 +99,23 @@ void ClaudiusVisualizerDrawOverride::generateDisplayList(PartioVisualizerData *v
                         glDeleteLists(visualizerData->currentDisplayList, 1);
                     }
                 }
-                cout << "generating" << std::endl;
+                cout << "generating" << displayOptions.matrix << std::endl;
                 visualizerData->displayOptions = displayOptions;
 
                 const float *particleData = visualizerData->particleContainer->getParticleData();
                 const int *colorData = visualizerData->particleContainer->getColorData();
-                gGLFT->glMultMatrixd((double *) &visualizerData->matrix[0][0]);
 
                 visualizerData->currentDisplayList = gGLFT->glGenLists(1);
 
                 gGLFT->glNewList(visualizerData->currentDisplayList, GL_COMPILE);
-                ////////// list begin
 
+                ////////// list begin
+                gGLFT->glMultMatrixd((double *) &displayOptions.matrix[0][0]);
                 gGLFT->glPointSize(1.0f);
                 gGLFT->glColor3f(0.0f, 0.0f, 1.0f);
                 gGLFT->glBegin(MGL_POINTS);
-                for (unsigned int i = 0; i < visualizerData->particleContainer->particleCount() * 3; i = i + 3) {
+                for (unsigned int i = 0; i < visualizerData->particleContainer->particleCount() * 3;
+                     i = i + 3 * displayOptions.renderEveryNth) {
                     if (displayOptions.displayColor) {
                         gGLFT->glColor3f(colorData[i] / 255.0, colorData[i + 1] / 255.0, colorData[i + 2] / 255.0);
                     }
@@ -126,21 +129,31 @@ void ClaudiusVisualizerDrawOverride::generateDisplayList(PartioVisualizerData *v
     }
 
 }
-DisplayOptions ClaudiusVisualizerDrawOverride::createDisplayOptions() {
+DisplayOptions ClaudiusVisualizerDrawOverride::createDisplayOptions(MMatrix matrix) {
     return DisplayOptions(MPlug(claudiusVisualizer->thisMObject(), ClaudiusVisualizer::filePathAttribute).asString(),
                           MPlug(claudiusVisualizer->thisMObject(),
                                 ClaudiusVisualizer::renderWithColorAttribute).asBool(),
-                          100);
+                          MPlug(claudiusVisualizer->thisMObject(),
+                                ClaudiusVisualizer::displayEveryNthAttribute).asInt(),
+                          matrix);
 }
+
+DisplayOptions::DisplayOptions(const MString &particleFilePath,
+                               bool displayColor,
+                               int displayPercentage,
+                               MMatrix matrix)
+    : particleFilePath(particleFilePath),
+      displayColor(displayColor),
+      renderEveryNth(displayPercentage),
+      matrix(matrix) {}
 
 bool DisplayOptions::operator==(const DisplayOptions &rhs) const {
     return particleFilePath == rhs.particleFilePath &&
         displayColor == rhs.displayColor &&
-        displayEveryNth == rhs.displayEveryNth;
+        renderEveryNth == rhs.renderEveryNth &&
+        matrix == rhs.matrix;
 }
 bool DisplayOptions::operator!=(const DisplayOptions &rhs) const {
     return !(rhs == *this);
 }
-DisplayOptions::DisplayOptions(const MString &particleFilePath, bool displayColor, int displayPercentage)
-    : particleFilePath(particleFilePath), displayColor(displayColor), displayEveryNth(displayPercentage) {}
 DisplayOptions::DisplayOptions() = default;

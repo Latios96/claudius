@@ -15,6 +15,7 @@ MString ClaudiusVisualizer::drawDbClassification("drawdb/geometry/claudiusVisual
 MTypeId ClaudiusVisualizer::id(0x80007);
 MObject ClaudiusVisualizer::filePathAttribute;
 MObject ClaudiusVisualizer::renderWithColorAttribute;
+MObject ClaudiusVisualizer::displayEveryNthAttribute;
 
 ClaudiusVisualizer::ClaudiusVisualizer(){
   particleContainer = nullptr;
@@ -49,14 +50,25 @@ MStatus ClaudiusVisualizer::initialize() {
     typedStringAttribute.setStorable(true);
     addAttribute(filePathAttribute);
 
-    MFnNumericAttribute typedBoolAttribute;
-    renderWithColorAttribute = typedBoolAttribute.create("renderWithColor", "withColor", MFnNumericData::kBoolean);
-    typedBoolAttribute.setReadable(true);
-    typedBoolAttribute.setWritable(true);
-    typedBoolAttribute.setKeyable(false);
-    typedBoolAttribute.setConnectable(true);
-    typedBoolAttribute.setStorable(true);
+    MFnNumericAttribute typedBoolAttributeColor;
+    renderWithColorAttribute = typedBoolAttributeColor.create("renderWithColor", "withColor", MFnNumericData::kBoolean);
+    typedBoolAttributeColor.setReadable(true);
+    typedBoolAttributeColor.setWritable(true);
+    typedBoolAttributeColor.setKeyable(false);
+    typedBoolAttributeColor.setConnectable(true);
+    typedBoolAttributeColor.setStorable(true);
     addAttribute(renderWithColorAttribute);
+
+    MFnNumericAttribute typedBoolAttributeEveryNth;
+    displayEveryNthAttribute = typedBoolAttributeEveryNth.create("renderWithEveryNth", "withEveryNth", MFnNumericData::kInt);
+    typedBoolAttributeEveryNth.setReadable(true);
+    typedBoolAttributeEveryNth.setWritable(true);
+    typedBoolAttributeEveryNth.setKeyable(false);
+    typedBoolAttributeEveryNth.setConnectable(true);
+    typedBoolAttributeEveryNth.setStorable(true);
+    typedBoolAttributeEveryNth.setDefault(1);
+    typedBoolAttributeEveryNth.setMin(1);
+    addAttribute(displayEveryNthAttribute);
 
     return MStatus::kSuccess;
 }

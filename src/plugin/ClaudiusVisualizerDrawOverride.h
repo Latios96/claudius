@@ -17,10 +17,11 @@
 
 struct DisplayOptions {
   DisplayOptions();
-  DisplayOptions(const MString &particleFilePath, bool displayColor, int displayPercentage);
+  DisplayOptions(const MString &particleFilePath, bool displayColor, int displayPercentage, MMatrix matrix);
   MString particleFilePath;
   bool displayColor = true;
-  int displayEveryNth = 100;
+  int renderEveryNth = 100;
+  MMatrix matrix;
   bool operator==(const DisplayOptions &rhs) const;
   bool operator!=(const DisplayOptions &rhs) const;
 };
@@ -69,7 +70,7 @@ class ClaudiusVisualizerDrawOverride : public MPxDrawOverride {
 
   ClaudiusVisualizer *claudiusVisualizer;
   void generateDisplayList(PartioVisualizerData *visualizerData, DisplayOptions &displayOptions);
-  DisplayOptions createDisplayOptions();
+  DisplayOptions createDisplayOptions(MMatrix matrix);
 };
 
 #endif //CLAUDIUS_SRC_PLUGIN_CLAUDIUSVISUALIZERDRAWOVERRIDE_H_

@@ -28,6 +28,7 @@ class ClaudiusVisualizer:  public MPxLocatorNode{
     static MString drawDbClassification;
     static MObject filePathAttribute;
     static MObject renderWithColorAttribute;
+    static MObject displayEveryNthAttribute;
     ParticleContainer *particleContainer;
  protected:
   MCallbackId m_attrNameCallbackId;
