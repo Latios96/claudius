@@ -14,6 +14,7 @@
 #include <maya/MGLFunctionTable.h>
 #include <maya/MFnDagNode.h>
 #include <maya/MFnTransform.h>
+#include <maya/MFnMatrixData.h>
 
 struct DisplayOptions {
   DisplayOptions();
@@ -70,6 +71,7 @@ class ClaudiusVisualizerDrawOverride : public MPxDrawOverride {
 
   ClaudiusVisualizer *claudiusVisualizer;
   void generateDisplayList(PartioVisualizerData *visualizerData, DisplayOptions &displayOptions);
+  MMatrix getWorldSpaceTransform(const MObject& mObject, const MFnTransform& transform);
   DisplayOptions createDisplayOptions(MMatrix matrix);
 };
 

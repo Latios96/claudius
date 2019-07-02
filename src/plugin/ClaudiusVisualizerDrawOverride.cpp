@@ -25,13 +25,16 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
 
     MFnDagNode me(objPath);
     MFnTransform myTransform(me.parent(0));
-    MMatrix matrix = objPath.inclusiveMatrix();
+    MFnDependencyNode depNode(me.parent(0));
+    MObject worldMatrixAttr = depNode.attribute("worldMatrix");
+
+    MMatrix matrix = getWorldSpaceTransform(me.parent(0), myTransform);
 
     if (visualizerData == nullptr) {
         auto *pData = new PartioVisualizerData();
         if (claudiusVisualizer != nullptr && claudiusVisualizer->particleContainer != nullptr) {
             pData->particleContainer = claudiusVisualizer->particleContainer;
-            DisplayOptions displayOptions = createDisplayOptions(myTransform.transformation().asMatrix());
+            DisplayOptions displayOptions = createDisplayOptions(matrix);
             generateDisplayList(pData, displayOptions);
         } else {
             pData->particleContainer = nullptr;
@@ -41,7 +44,7 @@ MUserData *ClaudiusVisualizerDrawOverride::prepareForDraw(const MDagPath &objPat
     } else {
         if (claudiusVisualizer != nullptr && claudiusVisualizer->particleContainer != nullptr) {
             visualizerData->particleContainer = claudiusVisualizer->particleContainer;
-            DisplayOptions displayOptions = createDisplayOptions(myTransform.transformation().asMatrix());
+            DisplayOptions displayOptions = createDisplayOptions(matrix);
             generateDisplayList(visualizerData, displayOptions);
         }
         visualizerData->matrix = matrix;
@@ -136,6 +139,17 @@ DisplayOptions ClaudiusVisualizerDrawOverride::createDisplayOptions(MMatrix matr
                           MPlug(claudiusVisualizer->thisMObject(),
                                 ClaudiusVisualizer::displayEveryNthAttribute).asInt(),
                           matrix);
+}
+MMatrix ClaudiusVisualizerDrawOverride::getWorldSpaceTransform(const MObject& mObject, const MFnTransform& transform) {
+    auto worldMatrixAttr = transform.attribute("worldMatrix");
+
+    MPlug matrixPlug = MPlug(mObject, worldMatrixAttr);
+    matrixPlug = matrixPlug.elementByLogicalIndex(0);
+
+    MObject matrixObject = matrixPlug.asMObject();
+    MStatus status;
+    MFnMatrixData worldMatrixData(matrixObject, &status);
+    return worldMatrixData.matrix();
 }
 
 DisplayOptions::DisplayOptions(const MString &particleFilePath,
