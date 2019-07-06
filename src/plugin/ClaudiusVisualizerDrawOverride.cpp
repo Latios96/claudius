@@ -78,7 +78,6 @@ void ClaudiusVisualizerDrawOverride::drawCallback(const MDrawContext &context, c
 
         if (visualizerData != nullptr) {
             if (visualizerData->particleContainer != nullptr) {
-                cout << "drawing using " << visualizerData->currentDisplayList << std::endl;
                 gGLFT->glCallList(visualizerData->currentDisplayList);
             }
         }
@@ -86,7 +85,6 @@ void ClaudiusVisualizerDrawOverride::drawCallback(const MDrawContext &context, c
 }
 void ClaudiusVisualizerDrawOverride::generateDisplayList(PartioVisualizerData *visualizerData,
                                                          DisplayOptions &displayOptions) {
-    cout << "generate display list called" << std::endl;
     MHardwareRenderer *rend = MHardwareRenderer::theRenderer();
     MGLFunctionTable *gGLFT;
     if (rend) {
@@ -102,7 +100,6 @@ void ClaudiusVisualizerDrawOverride::generateDisplayList(PartioVisualizerData *v
                         glDeleteLists(visualizerData->currentDisplayList, 1);
                     }
                 }
-                cout << "generating" << displayOptions.matrix << std::endl;
                 visualizerData->displayOptions = displayOptions;
 
                 const float *particleData = visualizerData->particleContainer->getParticleData();

@@ -26,13 +26,10 @@ ClaudiusVisualizer::~ClaudiusVisualizer() {
 }
 
 void *ClaudiusVisualizer::creator() {
-  cout << "creator" << std::endl;
   return new ClaudiusVisualizer();
 }
 
 MStatus ClaudiusVisualizer::initialize() {
-    cout << "initialize" << std::endl;
-
     MStatus status;
 
     MFnStringData fnStringData;
@@ -92,14 +89,11 @@ MStatus ClaudiusVisualizer::compute(const MPlug &plug, MDataBlock &data) {
 
 bool fileExists(const char *filename) {
     std::ifstream ifile(filename);
+
     return (bool)ifile;
 }
 
 void ClaudiusVisualizer::readParticles() {
-    //const std::string filepath = R"(M:\Projekte\2019\recap_test\Aero_Scan.pts)";
-    //const std::string filepath = R"(M:\Projekte\2019\recap_test\test.pts)";
-    //const std::string filepath = R"(M:\Projekte\2019\recap_test\StanfordBunny.pts)";
-
     MString particleFile = MPlug(thisMObject(), ClaudiusVisualizer::filePathAttribute).asString();
 
     const char *filepath = particleFile.asChar();
