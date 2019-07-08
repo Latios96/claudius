@@ -7,12 +7,8 @@
 #ifndef CRAYG_PROGRESSREPORTER_H
 #define CRAYG_PROGRESSREPORTER_H
 
-
 #include <functional>
-#include <spdlog/spdlog.h>
-
-#define FMT_HEADER_ONLY
-
+#include <iostream>
 #include "fmt/format.h"
 #include "RemainingTimeCalculator.h"
 
@@ -30,7 +26,7 @@ class ProgressReporter {
 
   static ProgressReporter createLoggingProgressReporter(int maxIterations, std::string logMessage) {
       std::function<void(int, float)> logProgress = [logMessage](int progress, float timeRemaining) -> void {
-        spdlog::info(logMessage.c_str(), progress, timeRemaining);
+        std::cout << (logMessage.c_str(), progress, timeRemaining) << std::endl;
       };
       return {maxIterations, logProgress};
   }
@@ -58,7 +54,7 @@ class ProgressReporter {
       std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
       auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(end - startTime).count();
 
-      spdlog::info("Rendering took {} seconds.", microseconds * 0.0000006);
+      std::cout << fmt::format("Rendering took {} seconds.", microseconds * 0.0000006) << std::endl;
   }
 
   int iterationsDone;
@@ -70,6 +66,5 @@ class ProgressReporter {
   std::chrono::steady_clock::time_point startTime;
   RemainingTimeCalculator remainingTimeCalculator;
 };
-
 
 #endif //CRAYG_PROGRESSREPORTER_H

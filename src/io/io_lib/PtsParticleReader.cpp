@@ -5,7 +5,7 @@
 #include <sstream>
 #include <memory>
 #include <algorithm>
-#include <spdlog/spdlog.h>
+#include <fmt/format.h>
 #include <ProgressReporter.h>
 
 // remission: float
@@ -38,7 +38,7 @@ const unsigned int PTS_Z_INDEX = 1;
 void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &particleContainer) {
 
     if (file.fail()) {
-        spdlog::error("File does not exist: {}");
+        std::cerr << fmt::format("File does not exist: {}") << std::endl;;
         return;
     }
 
@@ -46,7 +46,7 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
     std::string line;
     std::getline(file, line);
     const int particleCount = std::stoi(line);
-    spdlog::info("Estimated particle count: {}", particleCount);
+    std::cout << fmt::format("Estimated particle count: {}", particleCount) << std::endl;;
     std::getline(file, line);
 
     std::vector<std::string> vec;
@@ -57,36 +57,36 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
     const bool positionRemissionAndRgb = vec.size() == 7;
     const bool positionRemissionQualityAndRgb = vec.size() == 8;
 
-    spdlog::info("positionOnly: {}", positionOnly );
-    spdlog::info("positionAndRgb: {}", positionAndRgb );
-    spdlog::info("positionRemissionAndRgb: {}", positionRemissionAndRgb );
-    spdlog::info("positionRemissionQualityAndRgb: {}", positionRemissionQualityAndRgb );
+    std::cout << fmt::format("positionOnly: {}", positionOnly ) << std::endl;;
+    std::cout << fmt::format("positionAndRgb: {}", positionAndRgb ) << std::endl;;
+    std::cout << fmt::format("positionRemissionAndRgb: {}", positionRemissionAndRgb ) << std::endl;;
+    std::cout << fmt::format("positionRemissionQualityAndRgb: {}", positionRemissionQualityAndRgb ) << std::endl;;
 
     if (positionOnly) {
-        spdlog::info("positionOnly");
-        spdlog::info("resize positions");
+        std::cout << fmt::format("positionOnly") << std::endl;;
+        std::cout << fmt::format("resize positions") << std::endl;;
         particleContainer.reservePositions(particleCount);
     } else if (positionAndRgb) {
-        spdlog::info("positionAndRgb");
-        spdlog::info("resize positions");
+        std::cout << fmt::format("positionAndRgb") << std::endl;;
+        std::cout << fmt::format("resize positions") << std::endl;;
         particleContainer.reservePositions(particleCount);
-        spdlog::info("resize colors");
+        std::cout << fmt::format("resize colors") << std::endl;;
         particleContainer.reserveColors(particleCount);
     } else if (positionRemissionAndRgb) {
-        spdlog::info("positionRemissionAndRgb");
-        spdlog::info("resize positions");
+        std::cout << fmt::format("positionRemissionAndRgb") << std::endl;;
+        std::cout << fmt::format("resize positions") << std::endl;;
         particleContainer.reservePositions(particleCount);
-        spdlog::info("resize colors");
+        std::cout << fmt::format("resize colors") << std::endl;;
         particleContainer.reserveColors(particleCount);
-        spdlog::info("resize remissions");
+        std::cout << fmt::format("resize remissions") << std::endl;;
         particleContainer.reserveRemissions(particleCount);
     } else if (positionRemissionQualityAndRgb) {
-        spdlog::info("positionRemissionQualityAndRgb");
-        spdlog::info("resize positions");
+        std::cout << fmt::format("positionRemissionQualityAndRgb") << std::endl;;
+        std::cout << fmt::format("resize positions") << std::endl;;
         particleContainer.reservePositions(particleCount);
-        spdlog::info("resize colors");
+        std::cout << fmt::format("resize colors") << std::endl;;
         particleContainer.reserveColors(particleCount);
-        spdlog::info("resize remissions");
+        std::cout << fmt::format("resize remissions") << std::endl;;
         particleContainer.reserveRemissions(particleCount);
     }
 
@@ -97,7 +97,7 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
 
     std::vector<std::string> vector;
     ProgressReporter progressReporter = ProgressReporter::createLoggingProgressReporter(particleCount);
-    spdlog::info("Reading particles..");
+    std::cout << fmt::format("Reading particles..") << std::endl;;
     while (std::getline(file, line)) {
         if (line.empty()) {
             continue;
@@ -126,8 +126,8 @@ void PtsParticleReader::readParticles(std::istream &file, ParticleContainer &par
         }
 
     }
-    spdlog::info("Reading done");
-    spdlog::info("Particle count: {}", particleContainer.particleCount());
+    std::cout << fmt::format("Reading done") << std::endl;;
+    std::cout << fmt::format("Particle count: {}", particleContainer.particleCount()) << std::endl;
 
 }
 
