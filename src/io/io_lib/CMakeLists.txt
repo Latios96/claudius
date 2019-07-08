@@ -1,7 +1,5 @@
 
 set(CLAUDIUS_IO_LIB_SOURCES
-        Greeter.h
-        Greeter.cpp
         ParticleContainer.h
         ParticleContainer.cpp
         ParticleReader.h
