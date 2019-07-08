@@ -4,7 +4,6 @@
 #include <catch.hpp>
 #include <PtsParticleReader.h>
 #include <iostream>
-#include <CharBufferOperator.h>
 
 TEST_CASE("PtsParticleReader"){
 

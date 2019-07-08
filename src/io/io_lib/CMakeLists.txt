@@ -9,8 +9,6 @@ set(CLAUDIUS_IO_LIB_SOURCES
         ParticleReaderFactory.cpp
         PtsParticleReader.h
         PtsParticleReader.cpp
-        CharBufferOperator.h
-        CharBufferOperator.cpp
         ProgressReporter.h
         ProgressReporter.cpp
         RemainingTimeCalculator.h
