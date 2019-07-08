@@ -2,12 +2,12 @@
 // Created by Jan on 20.04.2019.
 //
 
-#ifndef RASPITOLIGHT_SRC_UTILS_VERSION_H_
-#define RASPITOLIGHT_SRC_UTILS_VERSION_H_
+#ifndef CLAUDIUS_SRC_UTILS_VERSION_H_
+#define CLAUDIUS_SRC_UTILS_VERSION_H_
 
 #include <string>
 
 std::string getClaudiusVersion();
 std::string aboutClaudius();
 
-#endif //RASPITOLIGHT_SRC_UTILS_VERSION_H_
+#endif //CLAUDIUS_SRC_UTILS_VERSION_H_

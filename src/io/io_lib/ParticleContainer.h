@@ -2,8 +2,8 @@
 // Created by Jan on 20.04.2019.
 //
 
-#ifndef RASPITOLIGHT_SRC_IO_IO_LIB_PARTICLECONTAINER_H_
-#define RASPITOLIGHT_SRC_IO_IO_LIB_PARTICLECONTAINER_H_
+#ifndef CLAUDIUS_IO_LIB_PARTICLECONTAINER_H_
+#define CLAUDIUS_IO_LIB_PARTICLECONTAINER_H_
 
 #include <vector>
 // todo do 3float iterator
@@ -28,4 +28,4 @@ class ParticleContainer {
   std::vector<float> remissions;
 };
 
-#endif //RASPITOLIGHT_SRC_IO_IO_LIB_PARTICLECONTAINER_H_
+#endif //CLAUDIUS_IO_LIB_PARTICLECONTAINER_H_
