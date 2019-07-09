@@ -7,7 +7,7 @@
 
 #include "translators/DagTranslator.h"
 
-class CTestTranslator: public CDagTranslator {
+class ClaudiusVisializerTranslator: public CDagTranslator {
  public:
   AtNode *CreateArnoldNodes();
   virtual void Export(AtNode *);

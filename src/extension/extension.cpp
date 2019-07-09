@@ -11,7 +11,7 @@ DLLEXPORT void initializeExtension(CExtension &plugin) {
     cout << "Register Extension" << std::endl;
     plugin.RegisterTranslator("ClaudiusVisualizer",
                               "",
-                              CTestTranslator::creator);
+                              ClaudiusVisializerTranslator::creator);
 }
 DLLEXPORT void deinitializeExtension(CExtension &plugin) {
 }

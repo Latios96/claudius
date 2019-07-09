@@ -8,7 +8,7 @@
 #include <ai_nodes.h>
 
 
-void CTestTranslator::Export(AtNode* claudius_particle_cloud)
+void ClaudiusVisializerTranslator::Export(AtNode* claudius_particle_cloud)
 {
     AiNodeSetStr(claudius_particle_cloud, "file_path", FindMayaPlug("particleFile").asString().asChar());
     AiNodeSetFlt(claudius_particle_cloud, "particle_radius", 0.01);
@@ -30,15 +30,15 @@ void CTestTranslator::Export(AtNode* claudius_particle_cloud)
     ExportMatrix(claudius_particle_cloud);
 }
 
-AtNode* CTestTranslator::CreateArnoldNodes()
+AtNode* ClaudiusVisializerTranslator::CreateArnoldNodes()
 {
     return AddArnoldNode("claudiusparticlecloud");
 }
 
-void* CTestTranslator::creator()
+void* ClaudiusVisializerTranslator::creator()
 {
-    return new CTestTranslator();
+    return new ClaudiusVisializerTranslator();
 }
-void CTestTranslator::Update(AtNode *node) {
+void ClaudiusVisializerTranslator::Update(AtNode *node) {
 }
 
