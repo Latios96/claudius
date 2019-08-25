@@ -107,9 +107,10 @@ class PointCloudConverter(object):
         return ass_files
 
     def import_ass_files(self, ass_files):
-        for i, ass_files in enumerate(ass_files):
+        for i, ass_file in enumerate(ass_files):
             print "Importing chunk {}".format(i)
-            cmds.file(ass_files, i=True)
+            print ass_file
+            cmds.file(ass_file, i=True)
 
 
 def do_convert(with_colors=True, chunk_size=13000000):
