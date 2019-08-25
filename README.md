@@ -1,5 +1,15 @@
-# claudius
+# claudius [![Supported VFX Platform Versions](https://img.shields.io/badge/vfx%20platform-2019-green.svg)](http://www.vfxplatform.com/)
 
-Maya Plugin to import Point Clouds
+Plugin to display and render Point Clouds produced by 3D Laser Scanners.
 
-[![Supported VFX Platform Versions](https://img.shields.io/badge/vfx%20platform-2019-green.svg)](http://www.vfxplatform.com/) 
+Consists of:
+
+## How to build
+
+## How to run Maya with Claudius
+
+## Detailed documentation
+[here]("./docs/Claudius_Dokumentation_(German).pdf") (German only)
+
+
+ 
