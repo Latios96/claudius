@@ -6,6 +6,9 @@ Consists of:
 - a Maya Plugin with a FileTranslator and a custom Maya Node
 - an Arnold Procedural to render the Point Cloud with Arnold
 - an MtoA Extension, to translate the custom Maya Node to the Arnold Procedural
+
+Demo video: https://vimeo.com/356404909
+
 ## How to build
 Prebuild binaries are avaible from the Releases section
 Currently only Windows is supported.
